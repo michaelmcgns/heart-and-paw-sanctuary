@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jobs — Heart & Paw Sanctuary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    /* ── Jobs page ── */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gold-light);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      transition: gap 200ms;
+    }
+    .back-link:hover { gap: 4px; }
+    .back-link svg { width: 14px; height: 14px; }
+
+    .roles-intro {
+      background: var(--ivory);
+      padding-top: 56px;
+    }
+    .roles-intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .roles-intro-grid { grid-template-columns: 1fr; } }
+    .roles-sidebar {
+      background: linear-gradient(135deg, var(--eden-forest), var(--eden-rich));
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      color: var(--white);
+      position: sticky;
+      top: 100px;
+    }
+    .roles-sidebar h4 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .roles-sidebar p { font-size: 14px; color: rgba(255,255,255,.65); line-height: 1.7; margin-bottom: 24px; }
+    .sidebar-perks { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+    .sidebar-perk { display: flex; gap: 12px; align-items: flex-start; }
+    .sidebar-perk-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold-light);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+    .sidebar-perk span { font-size: 14px; color: rgba(255,255,255,.75); line-height: 1.55; }
+
+    .role-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-green);
+      overflow: hidden;
+      margin-bottom: 20px;
+      transition: box-shadow 250ms;
+    }
+    .role-card:hover { box-shadow: var(--shadow-md); }
+    .role-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 32px;
+      cursor: pointer;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .role-left { flex: 1; }
+    .role-dept { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--eden-sage); margin-bottom: 4px; }
+    .role-title { font-family: var(--font-display); font-size: 24px; font-weight: 600; color: var(--text-dark); }
+    .role-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .role-tag { background: var(--ivory-warm); color: var(--text-soft); font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: var(--radius-full); }
+    .role-arrow {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--ivory);
+      border: 1px solid var(--border-green);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 200ms;
+      flex-shrink: 0;
+    }
+    .role-arrow svg { width: 16px; height: 16px; color: var(--eden-rich); transition: transform 300ms; }
+    .role-card.open .role-arrow { background: var(--eden-rich); }
+    .role-card.open .role-arrow svg { color: var(--white); transform: rotate(45deg); }
+    .role-body { max-height: 0; overflow: hidden; transition: max-height 400ms ease; }
+    .role-body.open { max-height: 900px; }
+    .role-body-inner { padding: 0 32px 32px; border-top: 1px solid var(--border-green); padding-top: 28px; }
+    .role-body-inner p { font-size: 15px; color: var(--text-soft); line-height: 1.75; margin-bottom: 20px; }
+    .role-reqs { margin-bottom: 24px; }
+    .role-reqs h5 { font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text-mid); margin-bottom: 12px; }
+    .role-reqs ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .role-reqs ul li { display: flex; gap: 10px; font-size: 14px; color: var(--text-soft); line-height: 1.6; }
+    .role-reqs ul li::before { content: '—'; color: var(--eden-sage); flex-shrink: 0; }
+    .apply-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 26px;
+      background: var(--eden-rich);
+      color: var(--white);
+      border-radius: var(--radius-full);
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 200ms;
+    }
+    .apply-btn:hover { background: var(--eden-forest); transform: translateY(-1px); }
+
+    /* Spontaneous */
+    .spontaneous {
+      background: linear-gradient(135deg, var(--eden-deep), var(--eden-forest));
+      padding-block: 80px;
+      text-align: center;
+    }
+    .spontaneous .tag { color: var(--gold-light); }
+    .spontaneous .section-title { color: var(--white); }
+    .spontaneous .section-sub { color: rgba(255,255,255,.6); margin-inline: auto; }
+    .spontaneous-actions { display: flex; justify-content: center; gap: 16px; margin-top: 36px; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-mark">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 21.6C12 21.6 3 15 3 8.5C3 6.01 4.99 4 7.5 4C9.24 4 10.91 5.01 12 6.5C13.09 5.01 14.76 4 16.5 4C19.01 4 21 6.01 21 8.5C21 15 12 21.6 12 21.6Z" fill="rgba(232,192,106,0.8)"/>
+            <circle cx="8.5" cy="3" r="1.5" fill="rgba(168,197,181,0.7)"/>
+            <circle cx="15.5" cy="3" r="1.5" fill="rgba(168,197,181,0.7)"/>
+            <circle cx="5.5" cy="6" r="1.2" fill="rgba(168,197,181,0.7)"/>
+            <circle cx="18.5" cy="6" r="1.2" fill="rgba(168,197,181,0.7)"/>
+          </svg>
+        </div>
+        <div class="nav-brand">
+          <span class="nav-brand-top">Heart &amp; Paw</span>
+          <span class="nav-brand-sub">Dog Rescue Sanctuary</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="index.html#dogs">Meet Our Paws</a></li>
+        <li><a href="foster.html">Foster Program</a></li>
+        <li><a href="donate.html">Donate</a></li>
+        <li><a href="careers.html" class="active">Careers</a></li>
+        <li><a href="index.html#contact" class="btn nav-cta">Adopt Today</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="container page-hero-content">
+      <span class="tag">Careers at Heart &amp; Paw</span>
+      <h1>Open <em>positions</em></h1>
+      <p>Paid roles at our sanctuary near Siena — where meaningful work and a beautiful setting come as one.</p>
+    </div>
+  </section>
+
+  <!-- ROLES -->
+  <section class="section roles-intro">
+    <div class="container">
+      <div class="roles-intro-grid">
+
+        <!-- ROLE LIST -->
+        <div>
+          <a href="careers.html" class="back-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            All opportunities
+          </a>
+
+          <div class="role-card reveal" onclick="toggleRole(this)">
+            <div class="role-header">
+              <div class="role-left">
+                <div class="role-dept">Veterinary</div>
+                <div class="role-title">Veterinary Nurse</div>
+                <div class="role-tags">
+                  <span class="role-tag">Full-time</span>
+                  <span class="role-tag">On-site · Siena</span>
+                  <span class="role-tag">€28,000–€34,000</span>
+                </div>
+              </div>
+              <div class="role-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </div>
+            </div>
+            <div class="role-body">
+              <div class="role-body-inner">
+                <p>We are looking for a qualified veterinary nurse to join our on-site medical team. You will assist with daily health checks, post-operative care, vaccination programmes, and the ongoing medical management of our 40–60 resident dogs.</p>
+                <div class="role-reqs">
+                  <h5>Requirements</h5>
+                  <ul>
+                    <li>Qualified veterinary nurse (RVN or European equivalent)</li>
+                    <li>Minimum 2 years clinical experience</li>
+                    <li>Experience with dogs essential; rescue/shelter experience preferred</li>
+                    <li>Italian or English essential; both a strong advantage</li>
+                    <li>Genuine passion for animal welfare</li>
+                  </ul>
+                </div>
+                <a href="mailto:heartandpawsanctuary@gmail.com?subject=Application: Veterinary Nurse" class="apply-btn">
+                  Apply for this role
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="role-card reveal" onclick="toggleRole(this)">
+            <div class="role-header">
+              <div class="role-left">
+                <div class="role-dept">Animal Care</div>
+                <div class="role-title">Kennel Manager</div>
+                <div class="role-tags">
+                  <span class="role-tag">Full-time or Part-time</span>
+                  <span class="role-tag">On-site · Siena</span>
+                  <span class="role-tag">€26,000–€32,000</span>
+                </div>
+              </div>
+              <div class="role-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </div>
+            </div>
+            <div class="role-body">
+              <div class="role-body-inner">
+                <p>Oversee the daily running of our kennel and outdoor enclosure areas across the sanctuary's 8 hectares. You will lead a small care team, manage feeding and enrichment schedules, coordinate with our vet on resident health, and ensure every dog's environment meets the highest welfare standards.</p>
+                <div class="role-reqs">
+                  <h5>Requirements</h5>
+                  <ul>
+                    <li>Proven experience in kennel, shelter, or rescue management</li>
+                    <li>Strong leadership and team coordination skills</li>
+                    <li>Deep knowledge of canine behaviour and welfare standards</li>
+                    <li>Physical fitness — the role involves outdoor work in all conditions</li>
+                    <li>Italian or English essential; both a strong advantage</li>
+                  </ul>
+                </div>
+                <a href="mailto:heartandpawsanctuary@gmail.com?subject=Application: Kennel Manager" class="apply-btn">
+                  Apply for this role
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="role-card reveal" onclick="toggleRole(this)">
+            <div class="role-header">
+              <div class="role-left">
+                <div class="role-dept">Animal Care</div>
+                <div class="role-title">Kennel Assistant</div>
+                <div class="role-tags">
+                  <span class="role-tag">Full-time or Part-time</span>
+                  <span class="role-tag">On-site · Siena</span>
+                  <span class="role-tag">€18,000–€22,000</span>
+                </div>
+              </div>
+              <div class="role-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </div>
+            </div>
+            <div class="role-body">
+              <div class="role-body-inner">
+                <p>A hands-on entry-level role supporting the Kennel Manager with the day-to-day care of our resident dogs. You will feed, walk, clean, and — most importantly — spend time with dogs who need human connection to heal. No two days are the same.</p>
+                <div class="role-reqs">
+                  <h5>Requirements</h5>
+                  <ul>
+                    <li>A genuine love for dogs and calm, patient energy around animals</li>
+                    <li>Physical fitness and willingness to work outdoors in all weather</li>
+                    <li>Previous experience with dogs is helpful but not essential</li>
+                    <li>Reliable, punctual, and a strong team contributor</li>
+                    <li>Basic Italian or English; willingness to learn on the job</li>
+                  </ul>
+                </div>
+                <a href="mailto:heartandpawsanctuary@gmail.com?subject=Application: Kennel Assistant" class="apply-btn">
+                  Apply for this role
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="role-card reveal" onclick="toggleRole(this)">
+            <div class="role-header">
+              <div class="role-left">
+                <div class="role-dept">Operations · Remote</div>
+                <div class="role-title">International Assistant</div>
+                <div class="role-tags">
+                  <span class="role-tag">Full-time or Part-time</span>
+                  <span class="role-tag">Remote Online</span>
+                  <span class="role-tag">€20,000–€26,000</span>
+                </div>
+              </div>
+              <div class="role-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </div>
+            </div>
+            <div class="role-body">
+              <div class="role-body-inner">
+                <p>A fully remote role supporting our international adoption and fostering network. You will be the first point of contact for families across Europe — responding to enquiries, coordinating transport logistics, translating communications, and ensuring every family has a smooth experience from first message to adoption day.</p>
+                <div class="role-reqs">
+                  <h5>Requirements</h5>
+                  <ul>
+                    <li>Fluency in English plus at least one other European language (German, Dutch, French, or Spanish strongly preferred)</li>
+                    <li>Excellent written communication and customer-facing skills</li>
+                    <li>Organised, self-motivated, and comfortable working independently</li>
+                    <li>Familiarity with EU pet transport and import/export requirements a strong advantage</li>
+                    <li>Genuine passion for animal welfare and the Heart &amp; Paw mission</li>
+                  </ul>
+                </div>
+                <a href="mailto:heartandpawsanctuary@gmail.com?subject=Application: International Assistant" class="apply-btn">
+                  Apply for this role
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="role-card reveal" onclick="toggleRole(this)">
+            <div class="role-header">
+              <div class="role-left">
+                <div class="role-dept">Communications</div>
+                <div class="role-title">Social Media &amp; Fundraising Manager</div>
+                <div class="role-tags">
+                  <span class="role-tag">Full-time or Part-time</span>
+                  <span class="role-tag">Remote Online</span>
+                  <span class="role-tag">€24,000–€30,000</span>
+                </div>
+              </div>
+              <div class="role-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </div>
+            </div>
+            <div class="role-body">
+              <div class="role-body-inner">
+                <p>We have stories to tell and a community that genuinely cares. We need someone with warmth, creativity, and a head for fundraising to grow our donor base, tell our dogs' stories, and connect with adopters across Europe.</p>
+                <div class="role-reqs">
+                  <h5>Requirements</h5>
+                  <ul>
+                    <li>Proven experience managing social media for a cause-driven or lifestyle brand</li>
+                    <li>Strong copywriting in English (additional languages a big plus)</li>
+                    <li>Experience with donation platforms, email campaigns, or grant writing</li>
+                    <li>Photography or video editing skills a strong advantage</li>
+                    <li>Deep genuine alignment with animal welfare and our mission</li>
+                  </ul>
+                </div>
+                <a href="mailto:heartandpawsanctuary@gmail.com?subject=Application: Social Media and Fundraising Manager" class="apply-btn">
+                  Apply for this role
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="reveal reveal-delay-1">
+          <div class="roles-sidebar">
+            <h4>Questions &amp; contact about our jobs</h4>
+            <p>Have a question about a role, the application process, or life at Heart &amp; Paw? We'd love to hear from you — no question is too small.</p>
+            <div class="sidebar-perks">
+              <div class="sidebar-perk"><div class="sidebar-perk-dot"></div><span>We respond to all job enquiries within 3 working days</span></div>
+              <div class="sidebar-perk"><div class="sidebar-perk-dot"></div><span>Ask us anything about a specific role or requirements</span></div>
+              <div class="sidebar-perk"><div class="sidebar-perk-dot"></div><span>Not sure which role fits? Tell us about yourself and we'll guide you</span></div>
+              <div class="sidebar-perk"><div class="sidebar-perk-dot"></div><span>Remote applicants welcome to enquire about setup and expectations</span></div>
+            </div>
+            <a href="mailto:heartandpawsanctuary@gmail.com?subject=Job Enquiry" class="btn btn-gold" style="width:100%;justify-content:center">Contact Us</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SPONTANEOUS -->
+  <section class="spontaneous">
+    <div class="container">
+      <span class="tag">Don't see your role?</span>
+      <h2 class="section-title">Send a spontaneous application</h2>
+      <p class="section-sub">The right role has a way of appearing for the right person. Tell us about yourself.</p>
+      <div class="spontaneous-actions">
+        <a href="mailto:heartandpawsanctuary@gmail.com?subject=Spontaneous Application" class="btn btn-gold">Send your CV</a>
+        <a href="careers.html" class="btn btn-outline-white">All opportunities</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-name">Heart &amp; Paw Sanctuary</div>
+          <p>A no-kill sanctuary on 8 hectares of Tuscan hillside, finding forever homes for abandoned dogs since 2025.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Sanctuary</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="index.html#dogs">Meet Our Paws</a></li>
+            <li><a href="foster.html">Foster Program</a></li>
+            <li><a href="careers.html">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get Involved</h4>
+          <ul>
+            <li><a href="index.html#contact">Adopt</a></li>
+            <li><a href="foster.html">Foster</a></li>
+            <li><a href="donate.html">Donate</a></li>
+            <li><a href="volunteer.html">Volunteer</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:heartandpawsanctuary@gmail.com">heartandpawsanctuary@gmail.com</a></li>
+            <li><a href="tel:+390577000000">+39 0577 000 000</a></li>
+            <li><a href="#">Loc. Poggio Verde, Siena SI</a></li>
+            <li><a href="#">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Heart &amp; Paw Sanctuary APS · Made with <span class="footer-heart">♥</span> in Tuscany</p>
+        <p>Privacy Policy · Cookie Policy</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    function toggleRole(card) {
+      const isOpen = card.classList.contains('open');
+      document.querySelectorAll('.role-card').forEach(c => { c.classList.remove('open'); c.querySelector('.role-body').classList.remove('open'); });
+      if (!isOpen) { card.classList.add('open'); card.querySelector('.role-body').classList.add('open'); }
+    }
+  </script>
+</body>
+</html>

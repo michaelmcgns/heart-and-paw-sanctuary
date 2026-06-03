@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us — Heart & Paw Sanctuary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    .about-content {
+      position: relative;
+      padding-block: 96px;
+      overflow: hidden;
+    }
+    .about-content::before {
+      content: '';
+      position: absolute;
+      inset: -20px;
+      background: url('https://images.unsplash.com/photo-1534430480872-3498386e7856?w=1600&q=80') center / cover no-repeat;
+      filter: blur(10px);
+      z-index: 0;
+    }
+    .about-content::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(251,248,241,0.65);
+      z-index: 1;
+    }
+    .about-content-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+      margin-inline: auto;
+      text-align: center;
+    }
+    .about-section-title {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 18px;
+      margin-top: 52px;
+    }
+    .about-section-title:first-child { margin-top: 0; }
+    .about-body {
+      font-size: 17px;
+      color: var(--text-soft);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Heart and Paw Sanctuary home">
+        <div class="nav-logo-mark">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 21.6C12 21.6 3 15 3 8.5C3 6.01 4.99 4 7.5 4C9.24 4 10.91 5.01 12 6.5C13.09 5.01 14.76 4 16.5 4C19.01 4 21 6.01 21 8.5C21 15 12 21.6 12 21.6Z" fill="rgba(232,192,106,0.8)"/>
+            <circle cx="8.5" cy="3" r="1.5" fill="rgba(168,197,181,0.7)"/>
+            <circle cx="15.5" cy="3" r="1.5" fill="rgba(168,197,181,0.7)"/>
+            <circle cx="5.5" cy="6" r="1.2" fill="rgba(168,197,181,0.7)"/>
+            <circle cx="18.5" cy="6" r="1.2" fill="rgba(168,197,181,0.7)"/>
+          </svg>
+        </div>
+        <div class="nav-brand">
+          <span class="nav-brand-top">Heart &amp; Paw</span>
+          <span class="nav-brand-sub">Dog Rescue Sanctuary</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="about.html" class="active">About Us</a></li>
+        <li><a href="index.html#dogs">Meet Our Paws</a></li>
+        <li><a href="foster.html">Foster Program</a></li>
+        <li><a href="donate.html">Donate</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="index.html#contact" class="btn nav-cta">Adopt Today</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="container page-hero-content">
+      <span class="tag">Our Story</span>
+      <h1>Born in Tuscany, <em>rooted in love</em></h1>
+      <p>Heart &amp; Paw opened its gates in 2025 — a living sanctuary where abandoned dogs are given the time, space, and care to heal and find their forever families.</p>
+    </div>
+  </section>
+
+  <!-- ABOUT CONTENT -->
+  <section class="about-content">
+    <div class="container">
+      <div class="about-content-inner reveal">
+        <h2 class="about-section-title">About Us</h2>
+        <p class="about-body">The Heart and Paw Sanctuary is a non-profit organization built to rescue any and all dogs in need. We are a no-kill forever home sanctuary located in the countryside region of Italy, and stem our rescues throughout the United States. We value health and happiness for all of our dogs, and ensure the best for them every day. All of the dogs at our center are up for adoption and we strive to ensure the safest and best fit homes for each and every one of them.</p>
+
+        <h2 class="about-section-title">About Our Team</h2>
+        <p class="about-body">When developing our dream at Heart and Paws we ensured to build a family that is passionate about our mission and our goals. Every team member strives to support and love our dogs, our team, and our company.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-name">Heart &amp; Paw Sanctuary</div>
+          <p>A no-kill garden sanctuary on 8 hectares of Tuscan hillside, finding forever homes for abandoned dogs since 2025.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Sanctuary</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="index.html#dogs">Meet Our Paws</a></li>
+            <li><a href="foster.html">Foster Program</a></li>
+            <li><a href="careers.html">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get Involved</h4>
+          <ul>
+            <li><a href="index.html#contact">Adopt</a></li>
+            <li><a href="foster.html">Foster</a></li>
+            <li><a href="donate.html">Donate</a></li>
+            <li><a href="index.html#contact">Volunteer</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:heartandpawsanctuary@gmail.com">heartandpawsanctuary@gmail.com</a></li>
+            <li><a href="tel:+390577000000">+39 0577 000 000</a></li>
+            <li><a href="#">Loc. Poggio Verde, Siena SI</a></li>
+            <li><a href="#">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Heart &amp; Paw Sanctuary APS · Made with <span class="footer-heart">♥</span> in Tuscany</p>
+        <p>Privacy Policy · Cookie Policy</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

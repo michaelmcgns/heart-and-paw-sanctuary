@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Careers — Heart & Paw Sanctuary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    /* ── Careers hero ── */
+    .careers-hero { padding-bottom: 0; }
+    .careers-hero .page-hero-content { padding-bottom: 0; }
+    .careers-mission {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(255,255,255,.55);
+      max-width: 480px;
+      margin-inline: auto;
+      margin-top: 12px;
+      margin-bottom: 52px;
+      line-height: 1.65;
+      letter-spacing: .01em;
+    }
+    .careers-nav-btns {
+      display: flex;
+      gap: 0;
+      max-width: 860px;
+      margin-inline: auto;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      overflow: hidden;
+      box-shadow: 0 -8px 40px rgba(0,0,0,.2);
+    }
+    .careers-nav-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 32px 24px 36px;
+      background: rgba(255,255,255,.07);
+      border: none;
+      border-right: 1px solid rgba(255,255,255,.08);
+      text-decoration: none;
+      transition: background 250ms, transform 250ms;
+      position: relative;
+      overflow: hidden;
+    }
+    .careers-nav-btn:last-child { border-right: none; }
+    .careers-nav-btn::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 300ms ease;
+      transform-origin: center;
+    }
+    .careers-nav-btn:hover { background: rgba(255,255,255,.13); transform: translateY(-3px); }
+    .careers-nav-btn:hover::after { transform: scaleX(1); }
+    .cnb-icon {
+      width: 48px; height: 48px;
+      background: rgba(255,255,255,.12);
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 4px;
+      border: 1px solid rgba(255,255,255,.15);
+    }
+    .cnb-icon svg { width: 22px; height: 22px; color: var(--gold-light); }
+    .cnb-label {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1;
+    }
+    .cnb-sub {
+      font-size: 12px;
+      color: rgba(255,255,255,.5);
+      font-weight: 400;
+      text-align: center;
+      line-height: 1.4;
+    }
+    .cnb-arrow {
+      width: 16px; height: 16px;
+      color: rgba(255,255,255,.3);
+      margin-top: 4px;
+      transition: color 250ms, transform 250ms;
+    }
+    .careers-nav-btn:hover .cnb-arrow { color: var(--gold-light); transform: translateX(4px); }
+    @media (max-width: 640px) {
+      .careers-nav-btns { flex-direction: column; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+      .careers-nav-btn { border-right: none; border-bottom: 1px solid rgba(255,255,255,.08); flex-direction: row; padding: 20px 24px; }
+      .careers-nav-btn:last-child { border-bottom: none; }
+      .cnb-sub { text-align: left; }
+    }
+
+    /* ── Careers page ── */
+    .perks { background: var(--ivory); }
+    .perks-header { text-align: center; margin-bottom: 60px; }
+    .perks-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+    .perk-card {
+      padding: 30px 28px;
+      border-radius: var(--radius-lg);
+      background: var(--white);
+      border: 1px solid var(--border-green);
+      transition: transform 250ms, box-shadow 250ms;
+    }
+    .perk-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .perk-icon {
+      width: 52px; height: 52px;
+      background: linear-gradient(135deg, var(--eden-forest), var(--eden-emerald));
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 12px rgba(30,92,58,.25);
+    }
+    .perk-icon svg { width: 24px; height: 24px; color: var(--white); }
+    .perk-card h4 { font-family: var(--font-display); font-size: 22px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px; }
+    .perk-card p { font-size: 14px; color: var(--text-soft); line-height: 1.7; }
+
+    /* Roles */
+    .roles { background: var(--ivory-warm); }
+    .roles-header { margin-bottom: 48px; }
+    .role-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-green);
+      overflow: hidden;
+      margin-bottom: 20px;
+      transition: box-shadow 250ms;
+    }
+    .role-card:hover { box-shadow: var(--shadow-md); }
+    .role-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 32px;
+      cursor: pointer;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .role-left { flex: 1; }
+    .role-dept {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--eden-sage);
+      margin-bottom: 4px;
+    }
+    .role-title { font-family: var(--font-display); font-size: 24px; font-weight: 600; color: var(--text-dark); }
+    .role-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .role-tag {
+      background: var(--ivory-warm);
+      color: var(--text-soft);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+    }
+    .role-right { display: flex; align-items: center; gap: 16px; }
+    .role-arrow {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--ivory);
+      border: 1px solid var(--border-green);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 200ms, transform 300ms;
+      flex-shrink: 0;
+    }
+    .role-arrow svg { width: 16px; height: 16px; color: var(--eden-rich); transition: transform 300ms; }
+    .role-card.open .role-arrow { background: var(--eden-rich); }
+    .role-card.open .role-arrow svg { color: var(--white); transform: rotate(45deg); }
+    .role-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 400ms ease;
+    }
+    .role-body.open { max-height: 800px; }
+    .role-body-inner { padding: 0 32px 32px; border-top: 1px solid var(--border-green); padding-top: 28px; }
+    .role-body-inner p { font-size: 15px; color: var(--text-soft); line-height: 1.75; margin-bottom: 20px; }
+    .role-reqs { margin-bottom: 24px; }
+    .role-reqs h5 { font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text-mid); margin-bottom: 12px; }
+    .role-reqs ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .role-reqs ul li { display: flex; gap: 10px; font-size: 14px; color: var(--text-soft); line-height: 1.6; }
+    .role-reqs ul li::before { content: '—'; color: var(--eden-sage); flex-shrink: 0; }
+    .apply-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 26px;
+      background: var(--eden-rich);
+      color: var(--white);
+      border-radius: var(--radius-full);
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 200ms;
+    }
+    .apply-btn:hover { background: var(--eden-forest); transform: translateY(-1px); }
+
+    /* Spontaneous */
+    .spontaneous {
+      background: linear-gradient(135deg, var(--eden-deep), var(--eden-forest));
+      padding-block: 80px;
+    }
+    .spontaneous-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    @media (max-width: 840px) { .spontaneous-inner { grid-template-columns: 1fr; } }
+    .spontaneous .tag { color: var(--gold-light); }
+    .spontaneous .section-title { color: var(--white); }
+    .spontaneous .section-sub { color: rgba(255,255,255,.62); }
+    .spontaneous-form {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+    }
+    .spontaneous-form .form-label { color: rgba(255,255,255,.7); }
+    .spontaneous-form .form-input,
+    .spontaneous-form .form-select,
+    .spontaneous-form .form-textarea {
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.15);
+      color: var(--white);
+    }
+    .spontaneous-form .form-input::placeholder,
+    .spontaneous-form .form-textarea::placeholder { color: rgba(255,255,255,.35); }
+    .spontaneous-form .form-input:focus,
+    .spontaneous-form .form-textarea:focus,
+    .spontaneous-form .form-select:focus {
+      border-color: var(--gold-light);
+      box-shadow: 0 0 0 3px rgba(232,192,106,.15);
+    }
+    .spontaneous-form .form-select { color: rgba(255,255,255,.6); }
+    .spontaneous-form .form-select option { background: var(--eden-deep); color: var(--white); }
+    .spont-submit {
+      width: 100%;
+      justify-content: center;
+      padding: 15px;
+      background: var(--gold);
+      color: var(--white);
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .spont-submit:hover { background: #B07B2A; transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-mark">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 21.6C12 21.6 3 15 3 8.5C3 6.01 4.99 4 7.5 4C9.24 4 10.91 5.01 12 6.5C13.09 5.01 14.76 4 16.5 4C19.01 4 21 6.01 21 8.5C21 15 12 21.6 12 21.6Z" fill="rgba(232,192,106,0.8)"/>
+            <circle cx="8.5" cy="3" r="1.5" fill="rgba(168,197,181,0.7)"/>
+            <circle cx="15.5" cy="3" r="1.5" fill="rgba(168,197,181,0.7)"/>
+            <circle cx="5.5" cy="6" r="1.2" fill="rgba(168,197,181,0.7)"/>
+            <circle cx="18.5" cy="6" r="1.2" fill="rgba(168,197,181,0.7)"/>
+          </svg>
+        </div>
+        <div class="nav-brand">
+          <span class="nav-brand-top">Heart &amp; Paw</span>
+          <span class="nav-brand-sub">Dog Rescue Sanctuary</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="index.html#dogs">Meet Our Paws</a></li>
+        <li><a href="foster.html">Foster Program</a></li>
+        <li><a href="donate.html">Donate</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="index.html#contact" class="btn nav-cta">Adopt Today</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero careers-hero">
+    <div class="container page-hero-content">
+      <span class="tag">Heart &amp; Paw Sanctuary</span>
+      <h1>Opportunities and<br/><em>experiences we offer</em></h1>
+      <p class="careers-mission">Our goal at Heart &amp; Paw is to show that this is not just a job — but a foundation.</p>
+      <div class="careers-nav-btns">
+        <a href="jobs.html" class="careers-nav-btn">
+          <div class="cnb-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+          </div>
+          <span class="cnb-label">Jobs</span>
+          <span class="cnb-sub">Paid positions at the sanctuary</span>
+          <svg class="cnb-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="volunteer.html" class="careers-nav-btn">
+          <div class="cnb-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <span class="cnb-label">Volunteer</span>
+          <span class="cnb-sub">Give your time, change a life</span>
+          <svg class="cnb-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="internships.html" class="careers-nav-btn">
+          <div class="cnb-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 22c0 0-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><path d="M12 22V6"/></svg>
+          </div>
+          <span class="cnb-label">Internships</span>
+          <span class="cnb-sub">Learn, grow, and make an impact</span>
+          <svg class="cnb-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPEN ROLES -->
+  <section class="section roles">
+    <div class="container">
+      <div class="roles-header">
+        <span class="tag">Open Positions</span>
+        <h2 class="section-title">Current openings</h2>
+        <p class="section-sub">We offer both <strong style="color:var(--eden-rich)">remote</strong> and <strong style="color:var(--eden-rich)">on-site</strong> opportunities. On-site roles are based at our sanctuary near Siena; remote roles can be carried out from anywhere in Europe. Relocation support available for the right candidate.</p>
+      </div>
+
+      <!-- Role 1 -->
+      <div class="role-card reveal" onclick="toggleRole(this)">
+        <div class="role-header">
+          <div class="role-left">
+            <div class="role-dept">Veterinary</div>
+            <div class="role-title">Veterinary Nurse</div>
+            <div class="role-tags">
+              <span class="role-tag">Full-time</span>
+              <span class="role-tag">On-site · Siena</span>
+              <span class="role-tag">€28,000–€34,000</span>
+            </div>
+          </div>
+          <div class="role-right">
+            <div class="role-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="role-body">
+          <div class="role-body-inner">
+            <p>We are looking for a qualified veterinary nurse to join our on-site medical team. You will assist Dr. Conti with daily health checks, post-operative care, vaccination programmes, and the ongoing medical management of our 40–60 resident dogs.</p>
+            <div class="role-reqs">
+              <h5>Requirements</h5>
+              <ul>
+                <li>Qualified veterinary nurse (RVN or European equivalent)</li>
+                <li>Minimum 2 years clinical experience</li>
+                <li>Experience with dogs essential; rescue/shelter experience preferred</li>
+                <li>Italian or English essential; both a strong advantage</li>
+                <li>Genuine passion for animal welfare</li>
+              </ul>
+            </div>
+            <a href="mailto:heartandpawsanctuary@gmail.com?subject=Application: Veterinary Nurse" class="apply-btn">
+              Apply for this role
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Role 2 -->
+      <div class="role-card reveal" onclick="toggleRole(this)">
+        <div class="role-header">
+          <div class="role-left">
+            <div class="role-dept">Animal Care</div>
+            <div class="role-title">Dog Handler &amp; Enrichment Coordinator</div>
+            <div class="role-tags">
+              <span class="role-tag">Full-time</span>
+              <span class="role-tag">On-site · Siena</span>
+              <span class="role-tag">€22,000–€27,000</span>
+            </div>
+          </div>
+          <div class="role-right">
+            <div class="role-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="role-body">
+          <div class="role-body-inner">
+            <p>A hands-on role working directly with our resident dogs each day — leading walks, designing enrichment activities, supporting behavioural rehabilitation, and building the trust and confidence that every dog needs before adoption.</p>
+            <div class="role-reqs">
+              <h5>Requirements</h5>
+              <ul>
+                <li>Strong practical experience handling dogs of all sizes and temperaments</li>
+                <li>Understanding of positive reinforcement training methods</li>
+                <li>Physical fitness — the role involves outdoor work in all weather</li>
+                <li>Calm, patient temperament and excellent observational skills</li>
+                <li>Italian or English; both preferred</li>
+              </ul>
+            </div>
+            <a href="mailto:heartandpawsanctuary@gmail.com?subject=Application: Dog Handler" class="apply-btn">
+              Apply for this role
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Role 3 -->
+      <div class="role-card reveal" onclick="toggleRole(this)">
+        <div class="role-header">
+          <div class="role-left">
+            <div class="role-dept">Communications</div>
+            <div class="role-title">Social Media &amp; Fundraising Manager</div>
+            <div class="role-tags">
+              <span class="role-tag">Full-time or Part-time</span>
+              <span class="role-tag">Remote-friendly</span>
+              <span class="role-tag">€24,000–€30,000</span>
+            </div>
+          </div>
+          <div class="role-right">
+            <div class="role-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="role-body">
+          <div class="role-body-inner">
+            <p>We have 1,200 success stories to tell and a community that genuinely cares. We need someone with warmth, creativity, and a head for fundraising to help us grow our donor base, tell our dogs' stories, and connect with adopters across Europe.</p>
+            <div class="role-reqs">
+              <h5>Requirements</h5>
+              <ul>
+                <li>Proven experience managing social media for a cause-driven or lifestyle brand</li>
+                <li>Strong copywriting in English (additional languages a huge plus)</li>
+                <li>Experience with donation platforms, email campaigns, or grant writing</li>
+                <li>Photography or video editing skills a strong advantage</li>
+                <li>Deep genuine alignment with animal welfare and our mission</li>
+              </ul>
+            </div>
+            <a href="mailto:heartandpawsanctuary@gmail.com?subject=Application: Social Media and Fundraising Manager" class="apply-btn">
+              Apply for this role
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Role 4 -->
+      <div class="role-card reveal" onclick="toggleRole(this)">
+        <div class="role-header">
+          <div class="role-left">
+            <div class="role-dept">Adoptions</div>
+            <div class="role-title">Adoption &amp; Foster Coordinator</div>
+            <div class="role-tags">
+              <span class="role-tag">Full-time</span>
+              <span class="role-tag">Hybrid · Siena / Remote</span>
+              <span class="role-tag">€24,000–€29,000</span>
+            </div>
+          </div>
+          <div class="role-right">
+            <div class="role-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="role-body">
+          <div class="role-body-inner">
+            <p>The bridge between our dogs and their new families. You will manage the full adoption and fostering pipeline — from first enquiry to home assessment, matching, transport coordination, and lifelong post-adoption support across 14 countries.</p>
+            <div class="role-reqs">
+              <h5>Requirements</h5>
+              <ul>
+                <li>Experience in animal adoption, social work, or community coordination</li>
+                <li>Excellent interpersonal and communication skills</li>
+                <li>English essential; German, Dutch, or French a significant advantage</li>
+                <li>Organised, empathetic, and calm under emotional pressure</li>
+                <li>Familiarity with EU pet transport regulations preferred</li>
+              </ul>
+            </div>
+            <a href="mailto:heartandpawsanctuary@gmail.com?subject=Application: Adoption Coordinator" class="apply-btn">
+              Apply for this role
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SPONTANEOUS APPLICATION -->
+  <section class="spontaneous">
+    <div class="container">
+      <div class="spontaneous-inner">
+        <div class="reveal">
+          <span class="tag">Don't See Your Role?</span>
+          <h2 class="section-title">Send a spontaneous application</h2>
+          <p class="section-sub">We are always interested in hearing from exceptional people. If you feel Heart &amp; Paw is where you belong, tell us — the right role has a way of appearing.</p>
+        </div>
+        <div class="spontaneous-form reveal reveal-delay-1">
+          <form onsubmit="return handleSpont(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="s-first">First name <span style="color:var(--gold-light)">*</span></label>
+                <input id="s-first" type="text" class="form-input" placeholder="Your first name" required/>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="s-last">Last name <span style="color:var(--gold-light)">*</span></label>
+                <input id="s-last" type="text" class="form-input" placeholder="Your last name" required/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="s-email">Email <span style="color:var(--gold-light)">*</span></label>
+              <input id="s-email" type="email" class="form-input" placeholder="you@example.com" required/>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="s-area">Area of interest <span style="color:var(--gold-light)">*</span></label>
+              <select id="s-area" class="form-select" required>
+                <option value="" disabled selected>What kind of work?</option>
+                <option>Animal care / husbandry</option>
+                <option>Veterinary / medical</option>
+                <option>Behavioural therapy / training</option>
+                <option>Fundraising / communications</option>
+                <option>Administration / operations</option>
+                <option>Grounds &amp; horticulture</option>
+                <option>Volunteering (short-term)</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="s-message">Tell us about yourself <span style="color:var(--gold-light)">*</span></label>
+              <textarea id="s-message" class="form-textarea" placeholder="Why Heart &amp; Paw? What do you bring? What are you looking for?" required></textarea>
+            </div>
+            <button type="submit" class="btn spont-submit">Send Application</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-name">Heart &amp; Paw Sanctuary</div>
+          <p>A no-kill sanctuary on 8 hectares of Tuscan hillside, finding forever homes for abandoned dogs since 2025.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Sanctuary</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="index.html#dogs">Meet Our Paws</a></li>
+            <li><a href="foster.html">Foster Program</a></li>
+            <li><a href="careers.html">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get Involved</h4>
+          <ul>
+            <li><a href="index.html#contact">Adopt</a></li>
+            <li><a href="foster.html">Foster</a></li>
+            <li><a href="donate.html">Donate</a></li>
+            <li><a href="index.html#contact">Volunteer</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:heartandpawsanctuary@gmail.com">heartandpawsanctuary@gmail.com</a></li>
+            <li><a href="tel:+390577000000">+39 0577 000 000</a></li>
+            <li><a href="#">Loc. Poggio Verde, Siena SI</a></li>
+            <li><a href="#">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Heart &amp; Paw Sanctuary APS · Made with <span class="footer-heart">♥</span> in Tuscany</p>
+        <p>Privacy Policy · Cookie Policy</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    function toggleRole(card) {
+      const isOpen = card.classList.contains('open');
+      document.querySelectorAll('.role-card').forEach(c => { c.classList.remove('open'); c.querySelector('.role-body').classList.remove('open'); });
+      if (!isOpen) { card.classList.add('open'); card.querySelector('.role-body').classList.add('open'); }
+    }
+
+    function handleSpont(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.spont-submit');
+      btn.textContent = '✓ Sent! We\'ll be in touch soon.';
+      btn.disabled = true;
+      return false;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Foster Program — Heart & Paw Sanctuary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    /* ── Foster page ── */
+    .how-it-works { background: var(--ivory); }
+    .hiw-header { text-align: center; margin-bottom: 64px; }
+    .hiw-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; position: relative; }
+    .hiw-steps::before {
+      content: '';
+      position: absolute;
+      top: 36px; left: 18%; right: 18%;
+      height: 1px;
+      background: var(--border-green);
+    }
+    @media (max-width: 640px) { .hiw-steps::before { display: none; } }
+    .hiw-step { text-align: center; padding: 0 20px; }
+    .step-circle {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--eden-forest), var(--eden-emerald));
+      color: var(--white);
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 600;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      box-shadow: 0 6px 20px rgba(30,92,58,.3);
+      position: relative;
+      z-index: 1;
+    }
+    .hiw-step h4 { font-family: var(--font-display); font-size: 21px; font-weight: 600; color: var(--text-dark); margin-bottom: 10px; }
+    .hiw-step p { font-size: 14px; color: var(--text-soft); line-height: 1.7; }
+
+    /* Foster info split */
+    .foster-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 840px) { .foster-split { grid-template-columns: 1fr; } }
+    .check-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .check-list li { display: flex; gap: 14px; align-items: flex-start; font-size: 15px; color: var(--text-soft); line-height: 1.6; }
+    .check-list .check-icon {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--eden-forest), var(--eden-emerald));
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .check-list .check-icon svg { width: 12px; height: 12px; color: var(--white); }
+
+    /* FAQ */
+    .faq { background: var(--ivory-warm); }
+    .faq-header { text-align: center; margin-bottom: 56px; }
+    .faq-list { max-width: 760px; margin-inline: auto; display: flex; flex-direction: column; gap: 0; }
+    .faq-item { border-bottom: 1px solid var(--border-green); }
+    .faq-item:first-child { border-top: 1px solid var(--border-green); }
+    .faq-q {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 22px 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-dark);
+      text-align: left;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      transition: color 200ms;
+    }
+    .faq-q:hover { color: var(--eden-rich); }
+    .faq-q svg { width: 18px; height: 18px; color: var(--eden-sage); flex-shrink: 0; transition: transform 300ms ease; }
+    .faq-q[aria-expanded="true"] svg { transform: rotate(45deg); }
+    .faq-a {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 350ms ease, padding 350ms ease;
+      padding: 0 0;
+    }
+    .faq-a.open { max-height: 400px; padding: 0 0 20px; }
+    .faq-a p { font-size: 15px; color: var(--text-soft); line-height: 1.75; }
+
+    /* Application form */
+    .apply-section { background: var(--white); }
+    .apply-layout {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 72px;
+      align-items: start;
+    }
+    @media (max-width: 960px) { .apply-layout { grid-template-columns: 1fr; } }
+    .apply-sidebar { position: sticky; top: 100px; }
+    .apply-sidebar-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 28px;
+    }
+    .apply-sidebar-quote {
+      background: linear-gradient(135deg, var(--eden-forest), var(--eden-rich));
+      border-radius: var(--radius-md);
+      padding: 24px 26px;
+      color: var(--white);
+    }
+    .apply-sidebar-quote p {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+    .apply-sidebar-quote cite { font-size: 12px; font-style: normal; color: var(--eden-mist); font-weight: 500; letter-spacing: .06em; text-transform: uppercase; }
+    .form-section-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-green);
+    }
+    .form-section-wrap { margin-bottom: 40px; }
+    .radio-group { display: flex; flex-direction: column; gap: 10px; }
+    .radio-option {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px 18px;
+      border: 1.5px solid var(--border-green);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: border-color 200ms, background 200ms;
+    }
+    .radio-option:hover { border-color: var(--eden-emerald); background: var(--ivory); }
+    .radio-option input[type=radio] { width: 18px; height: 18px; accent-color: var(--eden-rich); margin-top: 1px; flex-shrink: 0; cursor: pointer; }
+    .radio-option label { cursor: pointer; }
+    .radio-option label strong { display: block; font-size: 14px; font-weight: 600; color: var(--text-dark); margin-bottom: 2px; }
+    .radio-option label span { font-size: 13px; color: var(--text-muted); }
+    .submit-btn {
+      width: 100%;
+      justify-content: center;
+      padding: 17px;
+      font-size: 16px;
+      background: linear-gradient(135deg, var(--eden-forest), var(--eden-emerald));
+      color: var(--white);
+      border-radius: var(--radius-sm);
+      box-shadow: 0 4px 20px rgba(30,92,58,.3);
+    }
+    .submit-btn:hover { opacity: .9; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(30,92,58,.4); }
+    .form-note { font-size: 13px; color: var(--text-muted); text-align: center; margin-top: 16px; line-height: 1.6; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-mark">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 21.6C12 21.6 3 15 3 8.5C3 6.01 4.99 4 7.5 4C9.24 4 10.91 5.01 12 6.5C13.09 5.01 14.76 4 16.5 4C19.01 4 21 6.01 21 8.5C21 15 12 21.6 12 21.6Z" fill="rgba(232,192,106,0.8)"/>
+            <circle cx="8.5" cy="3" r="1.5" fill="rgba(168,197,181,0.7)"/>
+            <circle cx="15.5" cy="3" r="1.5" fill="rgba(168,197,181,0.7)"/>
+            <circle cx="5.5" cy="6" r="1.2" fill="rgba(168,197,181,0.7)"/>
+            <circle cx="18.5" cy="6" r="1.2" fill="rgba(168,197,181,0.7)"/>
+          </svg>
+        </div>
+        <div class="nav-brand">
+          <span class="nav-brand-top">Heart &amp; Paw</span>
+          <span class="nav-brand-sub">Dog Rescue Sanctuary</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="index.html#dogs">Meet Our Paws</a></li>
+        <li><a href="foster.html" class="active">Foster Program</a></li>
+        <li><a href="donate.html">Donate</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="index.html#contact" class="btn nav-cta">Adopt Today</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="container page-hero-content">
+      <span class="tag">Foster Program</span>
+      <h1>Open your home, <em>open a heart</em></h1>
+      <p>Fostering is the single most powerful thing you can do for a dog who isn't ready for adoption yet — and it will change you too.</p>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section how-it-works">
+    <div class="container">
+      <div class="hiw-header">
+        <span class="tag">The Journey</span>
+        <h2 class="section-title">How fostering works</h2>
+        <p class="section-sub" style="margin-inline:auto;text-align:center;max-width:540px">From first enquiry to the day your foster dog finds their forever home — here is every step.</p>
+      </div>
+      <div class="hiw-steps">
+        <div class="hiw-step reveal">
+          <div class="step-circle">1</div>
+          <h4>Apply online</h4>
+          <p>Complete the form below. We review all applications within 5 working days.</p>
+        </div>
+        <div class="hiw-step reveal reveal-delay-1">
+          <div class="step-circle">2</div>
+          <h4>Home assessment</h4>
+          <p>A friendly video call with our adoption team to understand your home, lifestyle, and experience.</p>
+        </div>
+        <div class="hiw-step reveal reveal-delay-2">
+          <div class="step-circle">3</div>
+          <h4>Meet your match</h4>
+          <p>We carefully pair you with a dog whose needs and energy fit your life perfectly.</p>
+        </div>
+        <div class="hiw-step reveal">
+          <div class="step-circle">4</div>
+          <h4>Welcome home</h4>
+          <p>Your foster dog arrives with full medical records, food, and everything they need.</p>
+        </div>
+        <div class="hiw-step reveal reveal-delay-1">
+          <div class="step-circle">5</div>
+          <h4>We support you</h4>
+          <p>Our team is available 7 days a week throughout your fostering journey — no question too small.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT WE PROVIDE / WHAT WE NEED -->
+  <section class="section" style="background:var(--petal)">
+    <div class="container">
+      <div class="foster-split">
+        <div class="reveal">
+          <span class="tag">What We Provide</span>
+          <h2 class="section-title" style="font-size:clamp(28px,4vw,42px)">Heart &amp; Paw supports every foster carer</h2>
+          <ul class="check-list" style="margin-top:28px">
+            <li>
+              <span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              All food and supplies for the duration of fostering
+            </li>
+            <li>
+              <span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              Full veterinary coverage — we pay every bill
+            </li>
+            <li>
+              <span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              24/7 behavioural support from our expert team
+            </li>
+            <li>
+              <span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              Training guidance tailored to your foster dog
+            </li>
+            <li>
+              <span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              Emergency backup — if life intervenes, we step in
+            </li>
+            <li>
+              <span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              A community of 150+ active foster carers across Europe
+            </li>
+          </ul>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <span class="tag">What We Ask of You</span>
+          <h2 class="section-title" style="font-size:clamp(28px,4vw,42px)">What makes a great foster carer?</h2>
+          <ul class="check-list" style="margin-top:28px">
+            <li>
+              <span class="check-icon" style="background:linear-gradient(135deg,var(--gold),var(--gold-light))"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              A stable, dog-safe living environment (house or garden preferred)
+            </li>
+            <li>
+              <span class="check-icon" style="background:linear-gradient(135deg,var(--gold),var(--gold-light))"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              Availability to be home for most of the day (at least initially)
+            </li>
+            <li>
+              <span class="check-icon" style="background:linear-gradient(135deg,var(--gold),var(--gold-light))"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              Patience — some dogs take days to open up, others take months
+            </li>
+            <li>
+              <span class="check-icon" style="background:linear-gradient(135deg,var(--gold),var(--gold-light))"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              Willingness to communicate openly with our team
+            </li>
+            <li>
+              <span class="check-icon" style="background:linear-gradient(135deg,var(--gold),var(--gold-light))"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              Agreement to our fostering guidelines (provided on approval)
+            </li>
+            <li>
+              <span class="check-icon" style="background:linear-gradient(135deg,var(--gold),var(--gold-light))"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+              Prior dog experience is helpful but not required
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section faq">
+    <div class="container">
+      <div class="faq-header">
+        <span class="tag">Questions &amp; Answers</span>
+        <h2 class="section-title">Fostering FAQs</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+            Do I need previous dog experience to foster?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <div class="faq-a"><p>Not at all. Many of our best foster carers are first-timers. We match you with a dog suited to your experience level, and our team provides full guidance every step of the way. If you have never had a dog before, we may start you with a confident, settled dog.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+            How long does fostering last?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <div class="faq-a"><p>Fostering periods range from 4 weeks to several months, depending on the dog's needs and your availability. We will always agree a minimum commitment upfront and work around you. There is no maximum — some foster carers have the same dog for over a year.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+            Can I foster if I have other pets or children?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <div class="faq-a"><p>Yes, many of our foster carers have other dogs, cats, and children. We match carefully to ensure compatibility. During your home assessment, we will discuss your household in detail and find a dog whose known behaviour fits safely and happily with your family.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+            What if I fall in love and want to adopt?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <div class="faq-a"><p>It happens — we call it a "foster fail" and it is our favourite kind. Foster carers have priority to adopt their foster dog, and around 30% of our foster placements turn into permanent adoptions. If you want to keep them, just say the word.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+            Who covers veterinary costs?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <div class="faq-a"><p>Heart &amp; Paw covers 100% of all veterinary costs during fostering. You will never be asked to pay a vet bill. If an emergency arises, call our emergency line and we will arrange everything immediately.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+            Can I foster if I live outside Italy?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <div class="faq-a"><p>Yes. We have foster carers across Italy, Germany, the Netherlands, the UK, France, Belgium, Austria, and Switzerland. Transport is arranged and covered by us. We do require that EU-based carers have a garden or outdoor space for the dog.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPLICATION FORM -->
+  <section class="section apply-section" id="apply">
+    <div class="container">
+      <div class="apply-layout">
+        <div class="apply-sidebar reveal">
+          <img
+            src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=500&q=80"
+            alt="Dog enjoying freedom in open Tuscan countryside"
+            class="apply-sidebar-img"
+            loading="lazy" width="400" height="533"
+          />
+          <div class="apply-sidebar-quote">
+            <p>"I fostered Marco for three months and of course ended up keeping him. The team at Heart &amp; Paw made it all so easy — I felt completely supported every single day."</p>
+            <cite>— Clara Hoffmann, Munich</cite>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-1">
+          <span class="tag">Foster Application</span>
+          <h2 class="section-title">Apply to foster</h2>
+          <p class="section-sub" style="margin-bottom:40px">Fill in the form below and our team will be in touch within 5 working days. All enquiries go to <a href="mailto:heartandpawsanctuary@gmail.com" style="color:var(--eden-rich);font-weight:500">heartandpawsanctuary@gmail.com</a>.</p>
+
+          <form onsubmit="return handleFosterSubmit(event)">
+
+            <div class="form-section-wrap">
+              <div class="form-section-title">About you</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="f-first">First name <span>*</span></label>
+                  <input id="f-first" type="text" class="form-input" placeholder="Your first name" required autocomplete="given-name"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="f-last">Last name <span>*</span></label>
+                  <input id="f-last" type="text" class="form-input" placeholder="Your last name" required autocomplete="family-name"/>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="f-email">Email address <span>*</span></label>
+                  <input id="f-email" type="email" class="form-input" placeholder="you@example.com" required autocomplete="email"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="f-phone">Phone number</label>
+                  <input id="f-phone" type="tel" class="form-input" placeholder="+49 123 456 7890" autocomplete="tel"/>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="f-country">Country <span>*</span></label>
+                  <select id="f-country" class="form-select" required>
+                    <option value="" disabled selected>Select your country</option>
+                    <option>Italy</option>
+                    <option>Germany</option>
+                    <option>Netherlands</option>
+                    <option>United Kingdom</option>
+                    <option>France</option>
+                    <option>Belgium</option>
+                    <option>Austria</option>
+                    <option>Switzerland</option>
+                    <option>Other EU country</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="f-city">City / Town <span>*</span></label>
+                  <input id="f-city" type="text" class="form-input" placeholder="e.g. Munich" required autocomplete="address-level2"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section-wrap">
+              <div class="form-section-title">Your home</div>
+              <div class="form-group">
+                <label class="form-label">Home type <span>*</span></label>
+                <div class="radio-group">
+                  <div class="radio-option">
+                    <input type="radio" name="home-type" id="ht-house" value="house" required/>
+                    <label for="ht-house"><strong>House with garden</strong><span>Private outdoor space — ideal for most dogs</span></label>
+                  </div>
+                  <div class="radio-option">
+                    <input type="radio" name="home-type" id="ht-apt-balcony" value="apartment-balcony"/>
+                    <label for="ht-apt-balcony"><strong>Apartment with balcony</strong><span>Suitable for calm, low-energy dogs</span></label>
+                  </div>
+                  <div class="radio-option">
+                    <input type="radio" name="home-type" id="ht-apt" value="apartment"/>
+                    <label for="ht-apt"><strong>Apartment, no outdoor space</strong><span>We will discuss suitability with you</span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="f-household">Who lives in your home? <span>*</span></label>
+                <input id="f-household" type="text" class="form-input" placeholder="e.g. Partner, 2 children (ages 6 &amp; 9), 1 cat" required/>
+              </div>
+            </div>
+
+            <div class="form-section-wrap">
+              <div class="form-section-title">Your experience &amp; availability</div>
+              <div class="form-group">
+                <label class="form-label" for="f-experience">Dog experience <span>*</span></label>
+                <select id="f-experience" class="form-select" required>
+                  <option value="" disabled selected>Select your level</option>
+                  <option>No experience — first time with a dog</option>
+                  <option>Some experience — grew up with dogs</option>
+                  <option>Experienced — have owned dogs as an adult</option>
+                  <option>Very experienced — have fostered or trained dogs before</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="f-availability">How much time can you offer daily? <span>*</span></label>
+                <select id="f-availability" class="form-select" required>
+                  <option value="" disabled selected>Select availability</option>
+                  <option>Mostly home (work from home / retired)</option>
+                  <option>Home most of the day with some absences</option>
+                  <option>Out for 4–6 hours per day</option>
+                  <option>Out for 6+ hours per day</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="f-duration">How long can you foster? <span>*</span></label>
+                <select id="f-duration" class="form-select" required>
+                  <option value="" disabled selected>Select duration</option>
+                  <option>4–6 weeks</option>
+                  <option>6–12 weeks</option>
+                  <option>3–6 months</option>
+                  <option>Open-ended — as long as needed</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="f-start">When could you start? <span>*</span></label>
+                <input id="f-start" type="date" class="form-input" required/>
+              </div>
+            </div>
+
+            <div class="form-section-wrap">
+              <div class="form-section-title">Anything else?</div>
+              <div class="form-group">
+                <label class="form-label" for="f-notes">Additional information or questions</label>
+                <textarea id="f-notes" class="form-textarea" placeholder="Tell us anything else that would help us find your perfect match — allergies, specific needs, previous fostering experience, etc."></textarea>
+              </div>
+              <div class="form-group">
+                <div class="form-check">
+                  <input type="checkbox" id="f-agree" required/>
+                  <label for="f-agree">I confirm the information above is accurate and I understand Heart &amp; Paw will contact me to discuss my application. <span style="color:var(--gold)">*</span></label>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn submit-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              Submit Foster Application
+            </button>
+            <p class="form-note">We respond to all applications within 5 working days.<br/>Questions? Email us at <a href="mailto:heartandpawsanctuary@gmail.com" style="color:var(--eden-rich)">heartandpawsanctuary@gmail.com</a></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-name">Heart &amp; Paw Sanctuary</div>
+          <p>A no-kill sanctuary on 8 hectares of Tuscan hillside, finding forever homes for abandoned dogs since 2025.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Sanctuary</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="index.html#dogs">Meet Our Paws</a></li>
+            <li><a href="foster.html">Foster Program</a></li>
+            <li><a href="careers.html">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get Involved</h4>
+          <ul>
+            <li><a href="index.html#contact">Adopt</a></li>
+            <li><a href="foster.html">Foster</a></li>
+            <li><a href="donate.html">Donate</a></li>
+            <li><a href="index.html#contact">Volunteer</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:heartandpawsanctuary@gmail.com">heartandpawsanctuary@gmail.com</a></li>
+            <li><a href="tel:+390577000000">+39 0577 000 000</a></li>
+            <li><a href="#">Loc. Poggio Verde, Siena SI</a></li>
+            <li><a href="#">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Heart &amp; Paw Sanctuary APS · Made with <span class="footer-heart">♥</span> in Tuscany</p>
+        <p>Privacy Policy · Cookie Policy</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    function toggleFaq(btn) {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.faq-q').forEach(b => { b.setAttribute('aria-expanded','false'); });
+      document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+      if (!expanded) {
+        btn.setAttribute('aria-expanded','true');
+        btn.nextElementSibling.classList.add('open');
+      }
+    }
+
+    function handleFosterSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.submit-btn');
+      btn.innerHTML = '✓ Application received! We\'ll be in touch within 5 days.';
+      btn.style.background = 'var(--eden-forest)';
+      btn.disabled = true;
+      return false;
+    }
+  </script>
+</body>
+</html>

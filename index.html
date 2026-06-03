@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heart & Paw Sanctuary — A Paradise in Tuscany</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Design Tokens — Garden of Eden ── */
+    :root {
+      --eden-deep:      #0A1F12;
+      --eden-forest:    #163D28;
+      --eden-rich:      #1E5C3A;
+      --eden-emerald:   #2D7A52;
+      --eden-sage:      #5A8C72;
+      --eden-mist:      #A8C5B5;
+      --gold:           #C9923A;
+      --gold-light:     #E8C06A;
+      --gold-pale:      #F5E4B8;
+      --ivory:          #FBF8F1;
+      --ivory-warm:     #F3EDE0;
+      --petal:          #F7EFE4;
+      --text-dark:      #0F2119;
+      --text-mid:       #2D5240;
+      --text-soft:      #5A7A68;
+      --text-muted:     #8AAD98;
+      --white:          #FFFFFF;
+      --border-green:   rgba(45,122,82,.18);
+      --shadow-sm:  0 2px 8px rgba(10,31,18,.1);
+      --shadow-md:  0 8px 32px rgba(10,31,18,.15);
+      --shadow-lg:  0 20px 60px rgba(10,31,18,.22);
+      --radius-sm: 10px;
+      --radius-md: 20px;
+      --radius-lg: 32px;
+      --radius-full: 9999px;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-serif:   'Playfair Display', Georgia, serif;
+      --font-sans:    'Inter', system-ui, sans-serif;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--ivory);
+      color: var(--text-dark);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; border: none; background: none; font: inherit; }
+
+    /* ── Utilities ── */
+    .container { max-width: 1160px; margin-inline: auto; padding-inline: 28px; }
+    .section { padding-block: 108px; }
+    .tag {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--eden-emerald);
+      margin-bottom: 18px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(38px, 5.5vw, 62px);
+      font-weight: 600;
+      line-height: 1.1;
+      color: var(--text-dark);
+      margin-bottom: 20px;
+    }
+    .section-sub {
+      font-size: 17px;
+      color: var(--text-soft);
+      line-height: 1.75;
+      max-width: 560px;
+      font-weight: 300;
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 15px 30px;
+      border-radius: var(--radius-full);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: .03em;
+      transition: all 220ms ease;
+    }
+    .btn-eden {
+      background: var(--eden-rich);
+      color: var(--white);
+      box-shadow: 0 3px 18px rgba(30,92,58,.35);
+    }
+    .btn-eden:hover {
+      background: var(--eden-forest);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(30,92,58,.45);
+    }
+    .btn-gold {
+      background: var(--gold);
+      color: var(--white);
+      box-shadow: 0 3px 18px rgba(201,146,58,.3);
+    }
+    .btn-gold:hover {
+      background: #B07B2A;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(201,146,58,.45);
+    }
+    .btn-outline-white {
+      border: 1.5px solid rgba(255,255,255,.5);
+      color: var(--white);
+    }
+    .btn-outline-white:hover {
+      background: rgba(255,255,255,.12);
+      border-color: rgba(255,255,255,.8);
+      transform: translateY(-2px);
+    }
+    .btn-outline-eden {
+      border: 1.5px solid var(--eden-emerald);
+      color: var(--eden-rich);
+    }
+    .btn-outline-eden:hover {
+      background: var(--eden-rich);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    /* ── Leaf decoration SVG ── */
+    .leaf-deco {
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+      opacity: .13;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 18px 0;
+      transition: background 350ms ease, box-shadow 350ms ease, padding 350ms ease;
+    }
+    .nav.scrolled {
+      background: rgba(10,31,18,.9);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 1px 0 rgba(255,255,255,.06);
+      padding: 13px 0;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+    .nav-logo-mark {
+      width: 40px; height: 40px;
+      background: rgba(255,255,255,.12);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(255,255,255,.2);
+      transition: background 350ms;
+    }
+    .nav.scrolled .nav-logo-mark { background: rgba(45,122,82,.3); }
+    .nav-logo-mark svg { width: 22px; height: 22px; }
+    .nav-brand {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+    .nav-brand-top {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: .01em;
+    }
+    .nav-brand-sub {
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+      font-weight: 400;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,.75);
+      letter-spacing: .02em;
+      transition: color 200ms;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      background: var(--gold) !important;
+      color: var(--white) !important;
+      padding: 10px 22px !important;
+      font-size: 13px !important;
+      box-shadow: 0 2px 12px rgba(201,146,58,.35) !important;
+    }
+    .nav-cta:hover { background: #B07B2A !important; transform: translateY(-1px) !important; }
+    @media (max-width: 768px) { .nav-links { display: none; } }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(160deg, rgba(8,24,14,.78) 0%, rgba(12,36,20,.5) 40%, rgba(8,24,14,.72) 100%),
+        url('./public/hero.jpg') center 50% / cover no-repeat;
+    }
+    /* living vine overlay */
+    .hero-vines {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 0% 50%, rgba(30,92,58,.25) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 100% 80%, rgba(20,70,42,.3) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding-top: 120px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(232,192,106,.35);
+      border-radius: var(--radius-full);
+      padding: 7px 18px;
+      margin-bottom: 32px;
+      background: rgba(10,31,18,.4);
+      backdrop-filter: blur(8px);
+    }
+    .hero-badge-leaf {
+      color: var(--gold-light);
+      font-size: 14px;
+    }
+    .hero-badge span {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .08em;
+      color: var(--gold-pale);
+      text-transform: uppercase;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 8.5vw, 96px);
+      font-weight: 400;
+      line-height: 1.0;
+      color: var(--white);
+      max-width: 800px;
+      margin-bottom: 28px;
+      letter-spacing: -.01em;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold-light);
+      font-weight: 300;
+    }
+    .hero-title strong {
+      font-weight: 700;
+    }
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 19px);
+      color: rgba(255,255,255,.72);
+      max-width: 500px;
+      line-height: 1.75;
+      margin-bottom: 44px;
+      font-weight: 300;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+    .hero-scroll {
+      position: absolute;
+      bottom: 44px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      color: rgba(255,255,255,.45);
+      font-size: 10px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      animation: floatDown 2.4s ease-in-out infinite;
+    }
+    .hero-scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.5), transparent);
+    }
+    @keyframes floatDown {
+      0%, 100% { transform: translateX(-50%) translateY(0); opacity: .45; }
+      50% { transform: translateX(-50%) translateY(8px); opacity: .7; }
+    }
+
+    /* ── Wave divider ── */
+    .wave { display: block; width: 100%; overflow: hidden; line-height: 0; }
+    .wave svg { display: block; }
+
+    /* ── EDEN PROMISE ── */
+    .promise {
+      background: linear-gradient(135deg, var(--eden-deep) 0%, var(--eden-forest) 100%);
+      padding-block: 72px;
+      position: relative;
+      overflow: hidden;
+    }
+    .promise-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0;
+    }
+    .promise-item {
+      text-align: center;
+      padding: 24px 32px;
+      position: relative;
+    }
+    .promise-item + .promise-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 20%; bottom: 20%;
+      width: 1px;
+      background: rgba(255,255,255,.1);
+    }
+    .promise-number {
+      font-family: var(--font-display);
+      font-size: 54px;
+      font-weight: 300;
+      color: var(--gold-light);
+      line-height: 1;
+      letter-spacing: -.02em;
+    }
+    .promise-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255,255,255,.5);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      background: var(--ivory);
+      position: relative;
+      overflow: hidden;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 88px;
+      align-items: center;
+    }
+    .about-images {
+      position: relative;
+      height: 600px;
+    }
+    .about-img-1 {
+      position: absolute;
+      top: 0; left: 0;
+      width: 72%;
+      height: 70%;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+    }
+    .about-img-2 {
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 60%;
+      height: 58%;
+      object-fit: cover;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      border: 5px solid var(--ivory);
+    }
+    .about-flourish {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px; height: 100px;
+      background: var(--ivory);
+      border-radius: 50%;
+      border: 3px solid var(--eden-mist);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 2;
+      box-shadow: var(--shadow-sm);
+    }
+    .about-flourish svg { width: 36px; height: 36px; color: var(--eden-emerald); }
+    .about-features { margin-top: 40px; display: flex; flex-direction: column; gap: 22px; }
+    .about-feature {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      padding: 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      transition: background 250ms, border-color 250ms;
+    }
+    .about-feature:hover {
+      background: var(--ivory-warm);
+      border-color: var(--border-green);
+    }
+    .about-feat-icon {
+      width: 46px; height: 46px;
+      background: linear-gradient(135deg, var(--eden-rich), var(--eden-emerald));
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(30,92,58,.3);
+    }
+    .about-feat-icon svg { width: 22px; height: 22px; color: var(--white); }
+    .about-feat-text strong { display: block; font-weight: 600; font-size: 15px; color: var(--text-dark); margin-bottom: 3px; }
+    .about-feat-text p { font-size: 14px; color: var(--text-soft); line-height: 1.65; }
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; gap: 56px; }
+      .about-images { height: 400px; }
+    }
+
+    /* ── DOGS ── */
+    .dogs {
+      background: linear-gradient(180deg, var(--ivory) 0%, var(--ivory-warm) 100%);
+      position: relative;
+    }
+    .dogs-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 56px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .dogs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+    }
+    .dog-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(90,140,114,.1);
+      transition: transform 260ms ease, box-shadow 260ms ease;
+    }
+    .dog-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+    }
+    .dog-img-wrap { overflow: hidden; position: relative; }
+    .dog-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      transition: transform 500ms ease;
+    }
+    .dog-card:hover .dog-img { transform: scale(1.06); }
+    .dog-status {
+      position: absolute;
+      top: 14px; left: 14px;
+      background: rgba(10,31,18,.75);
+      backdrop-filter: blur(6px);
+      color: var(--gold-light);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(232,192,106,.3);
+    }
+    .dog-body { padding: 22px 26px 26px; }
+    .dog-name {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+    }
+    .dog-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .dog-traits { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 22px; }
+    .trait {
+      background: var(--ivory-warm);
+      color: var(--eden-rich);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 13px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-green);
+    }
+    .dog-cta {
+      width: 100%;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--eden-forest), var(--eden-emerald));
+      color: var(--white);
+      padding: 13px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 600;
+      transition: opacity 200ms, transform 200ms;
+    }
+    .dog-cta:hover { opacity: .9; transform: translateY(-1px); }
+
+    /* ── SANCTUARY EXPERIENCE ── */
+    .experience {
+      background: linear-gradient(135deg, var(--eden-deep) 0%, #0F2E1C 50%, var(--eden-forest) 100%);
+      padding-block: 120px;
+      position: relative;
+      overflow: hidden;
+    }
+    .experience::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=1600&q=60') center/cover no-repeat;
+      opacity: .08;
+    }
+    .experience-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+    }
+    .experience-text .tag { color: var(--gold-light); }
+    .experience-text .section-title { color: var(--white); }
+    .experience-text .section-sub { color: rgba(255,255,255,.65); }
+    .experience-quote {
+      margin-top: 40px;
+      padding: 28px 32px;
+      border-left: 3px solid var(--gold);
+      background: rgba(255,255,255,.05);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    }
+    .experience-quote p {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 22px;
+      font-weight: 300;
+      color: rgba(255,255,255,.85);
+      line-height: 1.55;
+    }
+    .experience-quote cite {
+      display: block;
+      margin-top: 12px;
+      font-size: 12px;
+      font-style: normal;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      font-weight: 500;
+    }
+    .experience-pillars { display: flex; flex-direction: column; gap: 20px; }
+    .pillar {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 24px 28px;
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      transition: background 250ms, border-color 250ms;
+    }
+    .pillar:hover {
+      background: rgba(255,255,255,.09);
+      border-color: rgba(232,192,106,.25);
+    }
+    .pillar-num {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 300;
+      color: var(--gold-light);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 40px;
+      text-align: right;
+    }
+    .pillar-text strong { display: block; font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+    .pillar-text p { font-size: 14px; color: rgba(255,255,255,.55); line-height: 1.65; }
+    @media (max-width: 900px) {
+      .experience-grid { grid-template-columns: 1fr; gap: 56px; }
+    }
+
+    /* ── HOW TO HELP ── */
+    .help {
+      background: var(--ivory);
+      position: relative;
+    }
+    .help-header { text-align: center; margin-bottom: 68px; }
+    .help-header .section-sub { margin-inline: auto; }
+    .help-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 28px; }
+    .help-card {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(90,140,114,.12);
+      transition: transform 260ms, box-shadow 260ms;
+    }
+    .help-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+    .help-card-top {
+      padding: 44px 36px 36px;
+      background: linear-gradient(135deg, var(--eden-forest) 0%, var(--eden-rich) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .help-card-top::after {
+      content: '';
+      position: absolute;
+      bottom: -30px; right: -30px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.05);
+    }
+    .help-card-icon-wrap {
+      width: 56px; height: 56px;
+      background: rgba(255,255,255,.15);
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255,255,255,.2);
+    }
+    .help-card-icon-wrap svg { width: 26px; height: 26px; color: var(--gold-light); }
+    .help-card h3 {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .help-card-bottom { padding: 28px 36px 36px; background: var(--white); }
+    .help-card-bottom p {
+      font-size: 15px;
+      color: var(--text-soft);
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+    .help-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--eden-rich);
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      transition: gap 200ms;
+    }
+    .help-link:hover { gap: 12px; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials {
+      background: var(--petal);
+      position: relative;
+      overflow: hidden;
+    }
+    .testimonials-header { text-align: center; margin-bottom: 60px; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 28px; }
+    .t-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 34px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(90,140,114,.1);
+    }
+    .t-stars { display: flex; gap: 3px; margin-bottom: 18px; }
+    .t-stars svg { width: 14px; height: 14px; fill: var(--gold); }
+    .t-text {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 19px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--text-dark);
+      margin-bottom: 28px;
+    }
+    .t-author { display: flex; align-items: center; gap: 14px; }
+    .t-avatar {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--eden-mist);
+    }
+    .t-name { font-weight: 600; font-size: 14px; }
+    .t-loc { font-size: 13px; color: var(--text-muted); }
+
+    /* ── DONATE ── */
+    .donate {
+      background: var(--eden-deep);
+      padding-block: 120px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .donate-glow {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(45,122,82,.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .donate-inner { position: relative; z-index: 1; }
+    .donate .tag { color: var(--gold-light); }
+    .donate .section-title { color: var(--white); }
+    .donate .section-sub { color: rgba(255,255,255,.62); margin-inline: auto; }
+    .donate-tiers {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 40px;
+      margin-bottom: 44px;
+    }
+    .donate-tier {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius-full);
+      padding: 10px 24px;
+      color: rgba(255,255,255,.75);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 200ms;
+    }
+    .donate-tier:hover, .donate-tier.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--white);
+      box-shadow: 0 4px 16px rgba(201,146,58,.4);
+    }
+    .donate-tier strong { display: block; font-size: 20px; font-weight: 700; }
+    .donate-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; }
+
+    /* ── FOOTER ── */
+    .footer { background: #060F09; padding-block: 72px 36px; }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.6fr repeat(3, 1fr);
+      gap: 52px;
+      margin-bottom: 60px;
+    }
+    .footer-brand-name {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .footer-brand p {
+      font-size: 14px;
+      color: rgba(255,255,255,.42);
+      line-height: 1.75;
+      max-width: 280px;
+    }
+    .footer-col h4 {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.35);
+      margin-bottom: 22px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 13px; }
+    .footer-col ul a {
+      font-size: 14px;
+      color: rgba(255,255,255,.58);
+      transition: color 200ms;
+    }
+    .footer-col ul a:hover { color: var(--gold-light); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.07);
+      padding-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,.28); }
+    .footer-heart { color: var(--gold); }
+    @media (max-width: 820px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 100ms; }
+    .reveal-delay-2 { transition-delay: 200ms; }
+
+    @media (max-width: 640px) {
+      .section { padding-block: 72px; }
+      .hero-title { font-size: 46px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="container nav-inner">
+      <a href="#" class="nav-logo" aria-label="Heart and Paw Sanctuary home">
+        <div class="nav-logo-mark">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 21.6C12 21.6 3 15 3 8.5C3 6.01 4.99 4 7.5 4C9.24 4 10.91 5.01 12 6.5C13.09 5.01 14.76 4 16.5 4C19.01 4 21 6.01 21 8.5C21 15 12 21.6 12 21.6Z" fill="rgba(232,192,106,0.8)" stroke="rgba(232,192,106,0.5)" stroke-width="1"/>
+            <circle cx="8.5" cy="3" r="1.5" fill="rgba(168,197,181,0.7)"/>
+            <circle cx="15.5" cy="3" r="1.5" fill="rgba(168,197,181,0.7)"/>
+            <circle cx="5.5" cy="6" r="1.2" fill="rgba(168,197,181,0.7)"/>
+            <circle cx="18.5" cy="6" r="1.2" fill="rgba(168,197,181,0.7)"/>
+          </svg>
+        </div>
+        <div class="nav-brand">
+          <span class="nav-brand-top">Heart &amp; Paw</span>
+          <span class="nav-brand-sub">Dog Rescue Sanctuary</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="#dogs">Meet Our Paws</a></li>
+        <li><a href="foster.html">Foster Program</a></li>
+        <li><a href="donate.html">Donate</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="#contact" class="btn nav-cta">Adopt Today</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-bg" role="img" aria-label="Lush Tuscan garden with golden light filtering through ancient olive trees"></div>
+    <div class="hero-vines" aria-hidden="true"></div>
+
+    <!-- Decorative botanical leaf top-right -->
+    <svg class="leaf-deco" style="top:-60px;right:-80px;width:500px;height:500px;opacity:.07" viewBox="0 0 200 200" aria-hidden="true">
+      <path d="M100 10 Q160 40 170 100 Q180 160 120 180 Q80 190 40 160 Q10 130 20 80 Q35 30 100 10Z" fill="#5A8C72"/>
+      <path d="M100 10 L100 180" stroke="#3A6B50" stroke-width="2" fill="none"/>
+      <path d="M100 50 Q130 60 140 90" stroke="#3A6B50" stroke-width="1.2" fill="none"/>
+      <path d="M100 80 Q125 85 130 110" stroke="#3A6B50" stroke-width="1.2" fill="none"/>
+      <path d="M100 50 Q70 60 60 90" stroke="#3A6B50" stroke-width="1.2" fill="none"/>
+    </svg>
+
+    <div class="container hero-content">
+      <div class="hero-badge" aria-label="Siena, Tuscany — No-kill sanctuary, est. 2025">
+        <svg class="hero-badge-leaf" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22c0 0-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><path d="M12 22V6"/></svg>
+        <span>Siena, Tuscany — No-kill since 2025</span>
+      </div>
+
+      <h1 class="hero-title" id="hero-title">
+        A garden where<br/>every soul finds <em>paradise</em>
+      </h1>
+      <p class="hero-sub">
+        Heart &amp; Paw Sanctuary is a living oasis in the Tuscan hills — 8 hectares of meadow, olive groves, and love, where abandoned dogs roam free and find their forever families.
+      </p>
+      <div class="hero-actions">
+        <a href="#dogs" class="btn btn-gold">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Meet the Dogs
+        </a>
+        <a href="#about" class="btn btn-outline-white">Our Paradise</a>
+      </div>
+    </div>
+
+    <div class="hero-scroll" aria-hidden="true">
+      <div class="hero-scroll-line"></div>
+      <span>Discover</span>
+    </div>
+  </section>
+
+  <!-- PROMISE STRIP -->
+  <section class="promise" aria-label="Sanctuary statistics">
+    <!-- Botanical leaf decoration -->
+    <svg class="leaf-deco" style="left:-60px;top:-40px;width:300px;opacity:.06" viewBox="0 0 120 200" aria-hidden="true">
+      <path d="M60 5 Q100 30 105 80 Q110 130 70 165 Q40 185 15 160 Q-5 135 5 85 Q15 35 60 5Z" fill="#A8C5B5"/>
+      <path d="M60 5 L55 165" stroke="#A8C5B5" stroke-width="1.5" fill="none"/>
+    </svg>
+    <div class="container">
+      <div class="promise-grid">
+        <div class="promise-item">
+          <div class="promise-number">1,200+</div>
+          <div class="promise-label">Dogs Rehomed</div>
+        </div>
+        <div class="promise-item">
+          <div class="promise-number">Est.</div>
+          <div class="promise-label">2025</div>
+        </div>
+        <div class="promise-item">
+          <div class="promise-number">8 ha</div>
+          <div class="promise-label">Sanctuary Grounds</div>
+        </div>
+        <div class="promise-item">
+          <div class="promise-number">98%</div>
+          <div class="promise-label">Adoption Success</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section about" id="about" aria-labelledby="about-title">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-images reveal">
+          <img
+            src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&q=80"
+            alt="Two dogs running freely through sunlit Tuscan meadow"
+            class="about-img-1"
+            loading="lazy" width="500" height="420"
+          />
+          <img
+            src="https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=600&q=80"
+            alt="Dog resting peacefully in garden shade"
+            class="about-img-2"
+            loading="lazy" width="380" height="350"
+          />
+          <div class="about-flourish" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22c0 0-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><path d="M12 22V6"/></svg>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-1">
+          <span class="tag">The Sanctuary</span>
+          <h2 class="section-title" id="about-title">A living garden of second chances</h2>
+          <p class="section-sub">
+            The Heart and Paw Sanctuary is a non-profit organization built to rescue any and all dogs in need. We are a no-kill forever home sanctuary located in the countryside region of Italy, and stem our rescues throughout the United States. We value health and happiness for all of our dogs, and ensure the best for them every day. All of the dogs at our center are up for adoption and we strive to ensure the safest and best fit homes for each and every one of them.
+          </p>
+          <div style="margin-top:28px;margin-bottom:8px">
+            <strong style="display:block;font-family:var(--font-serif);font-size:18px;color:var(--text-dark);margin-bottom:10px">About Our Team</strong>
+            <p class="section-sub">When developing our dream at Heart and Paws we ensured to build a family that is passionate about our mission and our goals. Every team member strives to support and love our dogs, our team, and our company.</p>
+          </div>
+          <div class="about-features">
+            <div class="about-feature">
+              <div class="about-feat-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22c0 0-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/></svg>
+              </div>
+              <div class="about-feat-text">
+                <strong>8 hectares of open land</strong>
+                <p>Every dog roams free through meadows, olive groves, and fig gardens — a true Eden.</p>
+              </div>
+            </div>
+            <div class="about-feature">
+              <div class="about-feat-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </div>
+              <div class="about-feat-text">
+                <strong>On-site veterinary care</strong>
+                <p>Full medical care, trauma rehabilitation, and behavioural therapy for every resident.</p>
+              </div>
+            </div>
+            <div class="about-feature">
+              <div class="about-feat-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </div>
+              <div class="about-feat-text">
+                <strong>European adoption network</strong>
+                <p>We transport dogs door-to-door across the EU — your new family member can reach you anywhere.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOGS -->
+  <section class="section dogs" id="dogs" aria-labelledby="dogs-title">
+    <div class="container">
+      <div class="dogs-header">
+        <div>
+          <span class="tag">Ready for Their Garden</span>
+          <h2 class="section-title" id="dogs-title">Meet Our Paws</h2>
+        </div>
+        <a href="#contact" class="btn btn-outline-eden">See all 40+ souls</a>
+      </div>
+      <div class="dogs-grid">
+
+        <article class="dog-card reveal" tabindex="0" aria-label="Sole, Labrador mix, available for adoption">
+          <div class="dog-img-wrap">
+            <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=700&q=80" alt="Sole, golden Labrador mix, in sunlit garden" class="dog-img" loading="lazy" width="700" height="525"/>
+            <span class="dog-status">New arrival</span>
+          </div>
+          <div class="dog-body">
+            <div class="dog-name">Sole</div>
+            <div class="dog-meta">Labrador mix · 3 years · Male · Neutered</div>
+            <div class="dog-traits">
+              <span class="trait">Good with children</span>
+              <span class="trait">House-trained</span>
+              <span class="trait">Loves water</span>
+            </div>
+            <button class="btn dog-cta">Enquire about Sole</button>
+          </div>
+        </article>
+
+        <article class="dog-card reveal reveal-delay-1" tabindex="0" aria-label="Luna, Maremma mix, available for adoption">
+          <div class="dog-img-wrap">
+            <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=700&q=80" alt="Luna, white fluffy Maremma mix, resting on green grass" class="dog-img" loading="lazy" width="700" height="525"/>
+          </div>
+          <div class="dog-body">
+            <div class="dog-name">Luna</div>
+            <div class="dog-meta">Maremma mix · 5 years · Female · Spayed</div>
+            <div class="dog-traits">
+              <span class="trait">Gentle soul</span>
+              <span class="trait">Good with dogs</span>
+              <span class="trait">Rural bliss</span>
+            </div>
+            <button class="btn dog-cta">Enquire about Luna</button>
+          </div>
+        </article>
+
+        <article class="dog-card reveal reveal-delay-2" tabindex="0" aria-label="Fuoco, mixed breed, long stay">
+          <div class="dog-img-wrap">
+            <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=700&q=80" alt="Fuoco, brown rescue dog, sitting calmly outdoors" class="dog-img" loading="lazy" width="700" height="525"/>
+            <span class="dog-status">Long stay</span>
+          </div>
+          <div class="dog-body">
+            <div class="dog-name">Fuoco</div>
+            <div class="dog-meta">Mixed breed · 7 years · Male · Neutered</div>
+            <div class="dog-traits">
+              <span class="trait">Loyal companion</span>
+              <span class="trait">Senior-friendly</span>
+              <span class="trait">Deeply gentle</span>
+            </div>
+            <button class="btn dog-cta">Enquire about Fuoco</button>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="experience" aria-labelledby="experience-title">
+    <!-- leaf decoration -->
+    <svg class="leaf-deco" style="right:-100px;bottom:-80px;width:500px;opacity:.06" viewBox="0 0 200 260" aria-hidden="true">
+      <path d="M100 10 Q170 50 175 120 Q180 190 120 235 Q70 260 30 230 Q-10 195 5 120 Q20 50 100 10Z" fill="#A8C5B5"/>
+      <path d="M100 10 L95 235" stroke="#A8C5B5" stroke-width="2" fill="none"/>
+    </svg>
+    <div class="container experience-grid">
+      <div class="experience-text reveal">
+        <span class="tag">Life at the Sanctuary</span>
+        <h2 class="section-title" id="experience-title">Where healing grows as wild as the land</h2>
+        <p class="section-sub">We believe that dogs don't just need food and safety — they need soil underfoot, sun on their backs, and the freedom to simply be.</p>
+        <div class="experience-quote">
+          <p>"We don't run a shelter. We tend a living garden, and every dog is a rare bloom waiting for the right gardener."</p>
+          <cite>— Daniella de Raaf, Founder</cite>
+        </div>
+      </div>
+      <div class="experience-pillars reveal reveal-delay-1">
+        <div class="pillar">
+          <div class="pillar-num">I</div>
+          <div class="pillar-text">
+            <strong>Arrive, rest, breathe</strong>
+            <p>Every dog enters a quiet quarantine garden — no crowds, no noise — and is never rushed.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">II</div>
+          <div class="pillar-text">
+            <strong>Heal with the land</strong>
+            <p>Behavioural therapy is conducted outdoors. The land itself is part of the treatment.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">III</div>
+          <div class="pillar-text">
+            <strong>Join the family</strong>
+            <p>Dogs integrate into small groups — their own pack, their own patch of paradise.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">IV</div>
+          <div class="pillar-text">
+            <strong>Find their garden</strong>
+            <p>We match each dog to an adopter whose home mirrors what they thrive in — for life.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO HELP -->
+  <section class="section help" id="help" aria-labelledby="help-title">
+    <div class="container">
+      <div class="help-header">
+        <span class="tag">Tend the Garden</span>
+        <h2 class="section-title" id="help-title">Three ways to change a life</h2>
+        <p class="section-sub">A paradise grows with the care of many hands. Here is how yours can help.</p>
+      </div>
+      <div class="help-cards">
+
+        <div class="help-card reveal">
+          <div class="help-card-top">
+            <div class="help-card-icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <h3>Adopt</h3>
+          </div>
+          <div class="help-card-bottom">
+            <p>Bring a soul home forever. We guide you through every step — home check, preparation, and EU-wide transport — and remain your partner long after adoption day.</p>
+            <a href="#contact" class="help-link" aria-label="Start an adoption application">
+              Begin your journey
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="help-card reveal reveal-delay-1">
+          <div class="help-card-top">
+            <div class="help-card-icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <h3>Foster</h3>
+          </div>
+          <div class="help-card-bottom">
+            <p>Open your home as a temporary garden. Foster carers transform shy or traumatised dogs into confident, joyful companions — ready to blossom in their forever home.</p>
+            <a href="#contact" class="help-link" aria-label="Become a foster carer">
+              Open your home
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="help-card reveal reveal-delay-2">
+          <div class="help-card-top">
+            <div class="help-card-icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+            </div>
+            <h3>Donate</h3>
+          </div>
+          <div class="help-card-bottom">
+            <p>It costs €18 a day to give one dog sanctuary. Monthly donors are the roots of this garden — they make everything else possible and give us the certainty to plan ahead.</p>
+            <a href="#donate" class="help-link" aria-label="Make a donation">
+              Plant a seed today
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section testimonials" aria-labelledby="testimonials-title">
+    <div class="container">
+      <div class="testimonials-header">
+        <span class="tag">From Our Families</span>
+        <h2 class="section-title" id="testimonials-title">Stories from the garden</h2>
+      </div>
+      <div class="testimonials-grid">
+
+        <blockquote class="t-card reveal">
+          <div class="t-stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p class="t-text">"Bella came from Heart &amp; Paw two years ago. She arrived like she'd just walked through paradise — calm, loving, healed. I've never seen a dog so at peace with herself."</p>
+          <footer class="t-author">
+            <img src="https://i.pravatar.cc/92?img=47" alt="" class="t-avatar" aria-hidden="true" loading="lazy" width="46" height="46"/>
+            <div>
+              <div class="t-name">Sophie van der Berg</div>
+              <div class="t-loc">Amsterdam, Netherlands</div>
+            </div>
+          </footer>
+        </blockquote>
+
+        <blockquote class="t-card reveal reveal-delay-1">
+          <div class="t-stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p class="t-text">"I cycled through Tuscany and stumbled onto the sanctuary. Dogs roaming free through olive groves, golden light everywhere. I donated that evening and I'll never stop."</p>
+          <footer class="t-author">
+            <img src="https://i.pravatar.cc/92?img=12" alt="" class="t-avatar" aria-hidden="true" loading="lazy" width="46" height="46"/>
+            <div>
+              <div class="t-name">James Whitmore</div>
+              <div class="t-loc">Bristol, United Kingdom</div>
+            </div>
+          </footer>
+        </blockquote>
+
+        <blockquote class="t-card reveal reveal-delay-2">
+          <div class="t-stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p class="t-text">"We fostered Marco for three months — he came to us cowering and left us bounding with life. Of course, we kept him. Heart &amp; Paw gave us both a second chance."</p>
+          <footer class="t-author">
+            <img src="https://i.pravatar.cc/92?img=32" alt="" class="t-avatar" aria-hidden="true" loading="lazy" width="46" height="46"/>
+            <div>
+              <div class="t-name">Clara Hoffmann</div>
+              <div class="t-loc">Munich, Germany</div>
+            </div>
+          </footer>
+        </blockquote>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DONATE CTA -->
+  <section class="donate" id="donate" aria-labelledby="donate-title">
+    <div class="donate-glow" aria-hidden="true"></div>
+    <!-- Leaf decorations -->
+    <svg class="leaf-deco" style="left:-80px;top:10%;width:340px;opacity:.07" viewBox="0 0 140 220" aria-hidden="true">
+      <path d="M70 8 Q120 40 125 100 Q130 160 80 200 Q45 220 15 195 Q-15 165 5 95 Q20 35 70 8Z" fill="#5A8C72"/>
+      <path d="M70 8 L65 200" stroke="#5A8C72" stroke-width="2" fill="none"/>
+    </svg>
+    <svg class="leaf-deco" style="right:-60px;bottom:5%;width:300px;opacity:.06;transform:scaleX(-1)" viewBox="0 0 140 220" aria-hidden="true">
+      <path d="M70 8 Q120 40 125 100 Q130 160 80 200 Q45 220 15 195 Q-15 165 5 95 Q20 35 70 8Z" fill="#5A8C72"/>
+      <path d="M70 8 L65 200" stroke="#5A8C72" stroke-width="2" fill="none"/>
+    </svg>
+
+    <div class="donate-inner container">
+      <span class="tag">Sustain the Garden</span>
+      <h2 class="section-title" id="donate-title">Every seed of kindness blooms</h2>
+      <p class="section-sub">
+        Monthly donors are the foundation of everything we do. Choose an amount that feels right and watch your garden grow.
+      </p>
+      <div class="donate-tiers" role="group" aria-label="Donation amounts">
+        <button class="donate-tier" onclick="setActive(this)" type="button">
+          <strong>€10</strong>
+          feeds for a week
+        </button>
+        <button class="donate-tier active" onclick="setActive(this)" type="button">
+          <strong>€18</strong>
+          one full day of care
+        </button>
+        <button class="donate-tier" onclick="setActive(this)" type="button">
+          <strong>€50</strong>
+          vet visit covered
+        </button>
+        <button class="donate-tier" onclick="setActive(this)" type="button">
+          <strong>€100</strong>
+          sponsor a dog
+        </button>
+      </div>
+      <div class="donate-actions">
+        <a href="#contact" class="btn btn-gold" style="font-size:16px;padding:17px 36px;">Donate Monthly</a>
+        <a href="#contact" class="btn btn-outline-white">One-off gift</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="contact" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-name">Heart &amp; Paw Sanctuary</div>
+          <p>A no-kill garden sanctuary on 8 hectares of Tuscan hillside, finding forever homes for abandoned dogs across Europe since 2025.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Sanctuary</h4>
+          <ul>
+            <li><a href="#about">Our Story</a></li>
+            <li><a href="#dogs">Meet Our Paws</a></li>
+            <li><a href="#help">Foster Programme</a></li>
+            <li><a href="#">Visit Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get Involved</h4>
+          <ul>
+            <li><a href="#">Adopt</a></li>
+            <li><a href="foster.html">Foster Program</a></li>
+            <li><a href="donate.html">Donate</a></li>
+            <li><a href="careers.html">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:heartandpawsanctuary@gmail.com">heartandpawsanctuary@gmail.com</a></li>
+            <li><a href="tel:+390577000000">+39 0577 000 000</a></li>
+            <li><a href="#">Loc. Poggio Verde, Siena SI</a></li>
+            <li><a href="#">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Heart &amp; Paw Sanctuary APS · Made with <span class="footer-heart">♥</span> in Tuscany</p>
+        <p>Privacy Policy · Cookie Policy</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Donate tier toggle
+    function setActive(btn) {
+      document.querySelectorAll('.donate-tier').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>

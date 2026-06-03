@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Donate — Heart & Paw Sanctuary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    /* ── Donate page styles ── */
+    .donate-main {
+      background: var(--ivory);
+      padding-top: 80px;
+    }
+    .donate-layout {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 960px) { .donate-layout { grid-template-columns: 1fr; } }
+
+    /* Tier cards */
+    .tiers-section { margin-bottom: 56px; }
+    .tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .tier-card {
+      border: 2px solid var(--border-green);
+      border-radius: var(--radius-md);
+      padding: 24px 22px;
+      cursor: pointer;
+      transition: border-color 220ms, background 220ms, box-shadow 220ms;
+      background: var(--white);
+      text-align: left;
+      width: 100%;
+      font-family: var(--font-sans);
+    }
+    .tier-card:hover { border-color: var(--eden-emerald); background: var(--ivory); }
+    .tier-card.selected {
+      border-color: var(--eden-rich);
+      background: var(--ivory-warm);
+      box-shadow: 0 0 0 3px rgba(30,92,58,.1);
+    }
+    .tier-amount {
+      font-family: var(--font-display);
+      font-size: 34px;
+      font-weight: 600;
+      color: var(--text-dark);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .tier-freq { font-size: 12px; color: var(--text-muted); font-weight: 500; letter-spacing: .04em; }
+    .tier-label { font-size: 13px; color: var(--text-soft); margin-top: 8px; line-height: 1.5; }
+    .tier-featured {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .tier-featured .tier-amount { font-size: 40px; }
+    .tier-badge {
+      background: var(--gold);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: var(--radius-full);
+    }
+
+    /* Custom amount */
+    .custom-amount-wrap { position: relative; margin-bottom: 32px; }
+    .currency-prefix {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    .custom-amount-input {
+      width: 100%;
+      padding: 18px 18px 18px 46px;
+      border: 1.5px solid var(--border-green);
+      border-radius: var(--radius-sm);
+      font-size: 22px;
+      font-family: var(--font-display);
+      font-weight: 600;
+      color: var(--text-dark);
+      background: var(--white);
+      transition: border-color 200ms, box-shadow 200ms;
+    }
+    .custom-amount-input:focus {
+      outline: none;
+      border-color: var(--eden-emerald);
+      box-shadow: 0 0 0 3px rgba(45,122,82,.1);
+    }
+
+    /* Frequency toggle */
+    .freq-toggle {
+      display: inline-flex;
+      background: var(--ivory-warm);
+      border: 1px solid var(--border-green);
+      border-radius: var(--radius-full);
+      padding: 4px;
+      margin-bottom: 28px;
+    }
+    .freq-btn {
+      padding: 10px 24px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-soft);
+      transition: all 200ms;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+    .freq-btn.active {
+      background: var(--white);
+      color: var(--eden-rich);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Impact callout */
+    .impact-callout {
+      background: linear-gradient(135deg, var(--eden-forest), var(--eden-rich));
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      color: var(--white);
+      margin-bottom: 32px;
+    }
+    .impact-callout h4 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .impact-callout p { font-size: 15px; color: rgba(255,255,255,.72); line-height: 1.65; }
+
+    /* Donate form card */
+    .donate-form-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-green);
+      position: sticky;
+      top: 100px;
+    }
+    .donate-form-card h3 {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+    }
+    .donate-form-card .sub { font-size: 14px; color: var(--text-muted); margin-bottom: 28px; }
+    .submit-btn {
+      width: 100%;
+      justify-content: center;
+      padding: 17px;
+      font-size: 16px;
+      background: linear-gradient(135deg, var(--eden-forest), var(--eden-emerald));
+      color: var(--white);
+      border-radius: var(--radius-sm);
+      box-shadow: 0 4px 20px rgba(30,92,58,.3);
+      margin-top: 6px;
+    }
+    .submit-btn:hover { opacity: .9; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(30,92,58,.4); }
+    .secure-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 14px;
+    }
+    .secure-note svg { width: 13px; height: 13px; }
+
+    /* Impact breakdown */
+    .impact-breakdown { background: var(--ivory-warm); }
+    .impact-header { text-align: center; margin-bottom: 60px; }
+    .impact-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px; }
+    .impact-item {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      border: 1px solid var(--border-green);
+      transition: transform 250ms, box-shadow 250ms;
+    }
+    .impact-item:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .impact-icon {
+      width: 54px; height: 54px;
+      background: linear-gradient(135deg, var(--eden-forest), var(--eden-emerald));
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(30,92,58,.25);
+    }
+    .impact-icon svg { width: 26px; height: 26px; color: var(--white); }
+    .impact-item h4 { font-family: var(--font-display); font-size: 24px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px; }
+    .impact-item p { font-size: 14px; color: var(--text-soft); line-height: 1.7; }
+    .impact-amount {
+      display: inline-block;
+      background: var(--gold-pale);
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      margin-bottom: 12px;
+    }
+
+    /* Transparency */
+    .transparency {
+      background: var(--white);
+      padding-block: 80px;
+    }
+    .transparency-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    @media (max-width: 840px) { .transparency-inner { grid-template-columns: 1fr; } }
+    .pie-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .pie-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .pie-bar-bg {
+      flex: 1;
+      height: 10px;
+      background: var(--ivory-warm);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+    .pie-bar-fill {
+      height: 100%;
+      border-radius: var(--radius-full);
+      background: linear-gradient(90deg, var(--eden-rich), var(--eden-emerald));
+      transition: width 1s ease;
+    }
+    .pie-label { font-size: 14px; font-weight: 500; color: var(--text-mid); min-width: 180px; }
+    .pie-pct { font-size: 14px; font-weight: 700; color: var(--eden-rich); min-width: 44px; text-align: right; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-mark">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 21.6C12 21.6 3 15 3 8.5C3 6.01 4.99 4 7.5 4C9.24 4 10.91 5.01 12 6.5C13.09 5.01 14.76 4 16.5 4C19.01 4 21 6.01 21 8.5C21 15 12 21.6 12 21.6Z" fill="rgba(232,192,106,0.8)"/>
+            <circle cx="8.5" cy="3" r="1.5" fill="rgba(168,197,181,0.7)"/>
+            <circle cx="15.5" cy="3" r="1.5" fill="rgba(168,197,181,0.7)"/>
+            <circle cx="5.5" cy="6" r="1.2" fill="rgba(168,197,181,0.7)"/>
+            <circle cx="18.5" cy="6" r="1.2" fill="rgba(168,197,181,0.7)"/>
+          </svg>
+        </div>
+        <div class="nav-brand">
+          <span class="nav-brand-top">Heart &amp; Paw</span>
+          <span class="nav-brand-sub">Dog Rescue Sanctuary</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="index.html#dogs">The Dogs</a></li>
+        <li><a href="foster.html">Foster</a></li>
+        <li><a href="donate.html" class="active">Donate</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="index.html#contact" class="btn nav-cta">Adopt Today</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="container page-hero-content">
+      <span class="tag">Support the Sanctuary</span>
+      <h1>Plant a seed of <em>kindness</em></h1>
+      <p>Every contribution sustains a living garden where abandoned dogs find healing, love, and their forever families.</p>
+    </div>
+  </section>
+
+  <!-- MAIN DONATE SECTION -->
+  <section class="section donate-main">
+    <div class="container">
+      <div class="donate-layout">
+
+        <!-- LEFT: explanation + tiers -->
+        <div class="reveal">
+          <span class="tag">Choose Your Gift</span>
+          <h2 class="section-title">How would you<br/>like to give?</h2>
+          <p class="section-sub" style="margin-bottom:36px">
+            It costs us €18 per day to give one dog the full Heart &amp; Paw experience — veterinary care, nutritious food, behavioural therapy, and the freedom of 8 open hectares.
+          </p>
+
+          <div class="freq-toggle" role="group" aria-label="Donation frequency">
+            <button class="freq-btn active" onclick="setFreq(this,'Monthly')">Monthly</button>
+            <button class="freq-btn" onclick="setFreq(this,'One-off')">One-off</button>
+          </div>
+
+          <div class="tiers-section">
+            <div class="tiers-grid">
+              <button class="tier-card" onclick="selectTier(this,'10')" type="button">
+                <div class="tier-amount">€10</div>
+                <div class="tier-freq" id="freq-label">/ month</div>
+                <div class="tier-label">Feeds a dog for one week</div>
+              </button>
+              <button class="tier-card" onclick="selectTier(this,'25')" type="button">
+                <div class="tier-amount">€25</div>
+                <div class="tier-freq" id="freq-label">/ month</div>
+                <div class="tier-label">Covers daily care for a dog</div>
+              </button>
+              <button class="tier-card tier-featured selected" onclick="selectTier(this,'50')" type="button">
+                <div>
+                  <div class="tier-amount">€50</div>
+                  <div class="tier-freq">/ month</div>
+                  <div class="tier-label">Full weekly care for one dog</div>
+                </div>
+                <span class="tier-badge">Most popular</span>
+              </button>
+              <button class="tier-card" onclick="selectTier(this,'100')" type="button">
+                <div class="tier-amount">€100</div>
+                <div class="tier-freq">/ month</div>
+                <div class="tier-label">Sponsor a dog — cover everything</div>
+              </button>
+            </div>
+          </div>
+
+          <div class="impact-callout reveal">
+            <h4 id="impact-text">€50/month keeps Fuoco fed, healthy, and free for a full week — every week.</h4>
+            <p>Monthly donors are the roots of this garden. They give us the certainty to plan, hire, and care without interruption.</p>
+          </div>
+        </div>
+
+        <!-- RIGHT: form card -->
+        <div class="donate-form-card reveal reveal-delay-1">
+          <h3>Your donation</h3>
+          <p class="sub">Secure payment · Cancel anytime</p>
+
+          <div class="custom-amount-wrap">
+            <span class="currency-prefix">€</span>
+            <input
+              type="number"
+              class="custom-amount-input"
+              id="amount-input"
+              value="50"
+              min="1"
+              placeholder="Enter amount"
+              aria-label="Donation amount in euros"
+            />
+          </div>
+
+          <form onsubmit="return handleDonate(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="d-first">First name <span>*</span></label>
+                <input id="d-first" type="text" class="form-input" placeholder="Anna" required autocomplete="given-name"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="d-last">Last name <span>*</span></label>
+                <input id="d-last" type="text" class="form-input" placeholder="Müller" required autocomplete="family-name"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="d-email">Email <span>*</span></label>
+              <input id="d-email" type="email" class="form-input" placeholder="anna@example.com" required autocomplete="email"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="d-message">Dedication (optional)</label>
+              <input id="d-message" type="text" class="form-input" placeholder="In memory of / in honour of…"/>
+            </div>
+            <div class="form-group">
+              <div class="form-check">
+                <input type="checkbox" id="d-updates" checked/>
+                <label for="d-updates">Send me sanctuary updates and dog stories</label>
+              </div>
+            </div>
+            <button type="submit" class="btn submit-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              Donate €50 / month
+            </button>
+            <p class="secure-note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Secure · SSL encrypted · No fees taken from your gift
+            </p>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACT BREAKDOWN -->
+  <section class="section impact-breakdown">
+    <div class="container">
+      <div class="impact-header">
+        <span class="tag">Where Your Money Goes</span>
+        <h2 class="section-title">Every euro, accounted for</h2>
+        <p class="section-sub" style="margin-inline:auto;text-align:center">We publish full financial accounts annually. Here is how donations were spent in 2025.</p>
+      </div>
+      <div class="impact-items">
+        <div class="impact-item reveal">
+          <div class="impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+          <span class="impact-amount">€10 / month</span>
+          <h4>Veterinary &amp; Medical</h4>
+          <p>Vaccinations, parasite treatments, surgeries, dental care, and trauma rehabilitation for all residents.</p>
+        </div>
+        <div class="impact-item reveal reveal-delay-1">
+          <div class="impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+          <span class="impact-amount">€18 / month</span>
+          <h4>Daily Care &amp; Food</h4>
+          <p>Premium nutrition sourced from local Tuscan farms, daily enrichment activities, and staff time per dog.</p>
+        </div>
+        <div class="impact-item reveal reveal-delay-2">
+          <div class="impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <span class="impact-amount">€50 / month</span>
+          <h4>Adoption &amp; Transport</h4>
+          <p>Matching families, home checks, EU transport coordination, and ongoing post-adoption support.</p>
+        </div>
+        <div class="impact-item reveal">
+          <div class="impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22c0 0-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/></svg></div>
+          <span class="impact-amount">€100 / month</span>
+          <h4>Land &amp; Infrastructure</h4>
+          <p>Maintaining 8 hectares of sanctuary grounds, shelters, fencing, gardens, and water systems.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSPARENCY -->
+  <section class="section transparency">
+    <div class="container">
+      <div class="transparency-inner">
+        <div class="reveal">
+          <span class="tag">Full Transparency</span>
+          <h2 class="section-title">How donations were spent in 2025</h2>
+          <p class="section-sub" style="margin-bottom:40px">We believe every donor deserves to know exactly where their money goes. No administration black holes. No vague totals.</p>
+          <a href="mailto:heartandpawsanctuary@gmail.com" class="btn btn-outline-eden">Request Full Report</a>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <div class="pie-wrap">
+            <div class="pie-row">
+              <span class="pie-label">Animal care &amp; food</span>
+              <div class="pie-bar-bg"><div class="pie-bar-fill" style="width:62%"></div></div>
+              <span class="pie-pct">62%</span>
+            </div>
+            <div class="pie-row">
+              <span class="pie-label">Veterinary &amp; medical</span>
+              <div class="pie-bar-bg"><div class="pie-bar-fill" style="width:18%"></div></div>
+              <span class="pie-pct">18%</span>
+            </div>
+            <div class="pie-row">
+              <span class="pie-label">Land &amp; infrastructure</span>
+              <div class="pie-bar-bg"><div class="pie-bar-fill" style="width:11%"></div></div>
+              <span class="pie-pct">11%</span>
+            </div>
+            <div class="pie-row">
+              <span class="pie-label">Adoption &amp; transport</span>
+              <div class="pie-bar-bg"><div class="pie-bar-fill" style="width:6%"></div></div>
+              <span class="pie-pct">6%</span>
+            </div>
+            <div class="pie-row">
+              <span class="pie-label">Administration</span>
+              <div class="pie-bar-bg"><div class="pie-bar-fill" style="width:3%"></div></div>
+              <span class="pie-pct">3%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-name">Heart &amp; Paw Sanctuary</div>
+          <p>A no-kill sanctuary on 8 hectares of Tuscan hillside, finding forever homes for abandoned dogs since 2025.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Sanctuary</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="index.html#dogs">The Dogs</a></li>
+            <li><a href="foster.html">Foster</a></li>
+            <li><a href="careers.html">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get Involved</h4>
+          <ul>
+            <li><a href="index.html#contact">Adopt</a></li>
+            <li><a href="foster.html">Foster</a></li>
+            <li><a href="donate.html">Donate</a></li>
+            <li><a href="index.html#contact">Volunteer</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:heartandpawsanctuary@gmail.com">heartandpawsanctuary@gmail.com</a></li>
+            <li><a href="tel:+390577000000">+39 0577 000 000</a></li>
+            <li><a href="#">Loc. Poggio Verde, Siena SI</a></li>
+            <li><a href="#">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Heart &amp; Paw Sanctuary APS · Made with <span class="footer-heart">♥</span> in Tuscany</p>
+        <p>Privacy Policy · Cookie Policy</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    const impactMessages = {
+      '10': '€10/month keeps a dog nourished with fresh Tuscan farm food for a full week.',
+      '25': '€25/month covers a full day of care — food, attention, and freedom — for one dog.',
+      '50': '€50/month keeps one dog fully cared for — fed, healthy, and free — for an entire week.',
+      '100': '€100/month sponsors a dog completely — every meal, every vet visit, every moment of love.'
+    };
+
+    function selectTier(btn, amount) {
+      document.querySelectorAll('.tier-card').forEach(c => c.classList.remove('selected'));
+      btn.classList.add('selected');
+      document.getElementById('amount-input').value = amount;
+      document.querySelector('.submit-btn').textContent = '';
+      const svg = document.createElement('span');
+      document.querySelector('.submit-btn').innerHTML = `Donate €${amount} / month`;
+      const msg = impactMessages[amount] || `€${amount}/month makes a real, lasting difference.`;
+      document.getElementById('impact-text').textContent = msg;
+    }
+
+    function setFreq(btn, freq) {
+      document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.tier-freq').forEach(el => el.textContent = freq === 'Monthly' ? '/ month' : 'one-off');
+    }
+
+    function handleDonate(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.submit-btn');
+      btn.innerHTML = '✓ Redirecting to secure payment…';
+      btn.style.background = 'var(--eden-forest)';
+      return false;
+    }
+  </script>
+</body>
+</html>

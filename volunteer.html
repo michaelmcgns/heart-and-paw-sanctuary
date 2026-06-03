@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Volunteer — Heart & Paw Sanctuary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    .back-link { display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--gold-light);letter-spacing:.04em;text-transform:uppercase;margin-bottom:24px;transition:gap 200ms; }
+    .back-link:hover { gap:4px; }
+    .back-link svg { width:14px;height:14px; }
+
+    .vol-roles { background: var(--ivory); }
+    .vol-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-bottom: 64px; }
+    .vol-card {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--white);
+      border: 1px solid var(--border-green);
+      box-shadow: var(--shadow-sm);
+      transition: transform 250ms, box-shadow 250ms;
+    }
+    .vol-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .vol-card-top {
+      padding: 32px 28px 24px;
+      background: linear-gradient(135deg, var(--eden-forest), var(--eden-rich));
+    }
+    .vol-card-icon {
+      width: 50px; height: 50px;
+      background: rgba(255,255,255,.15);
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px;
+      border: 1px solid rgba(255,255,255,.2);
+    }
+    .vol-card-icon svg { width: 24px; height: 24px; color: var(--gold-light); }
+    .vol-card-top h3 { font-family: var(--font-display); font-size: 26px; font-weight: 600; color: var(--white); }
+    .vol-card-top .commitment { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--eden-mist); margin-top: 6px; }
+    .vol-card-body { padding: 24px 28px 28px; }
+    .vol-card-body p { font-size: 14px; color: var(--text-soft); line-height: 1.75; margin-bottom: 20px; }
+    .vol-tasks { display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
+    .vol-task { display: flex; gap: 10px; font-size: 13px; color: var(--text-soft); }
+    .vol-task::before { content: '→'; color: var(--eden-sage); flex-shrink: 0; font-weight: 600; }
+    .apply-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--eden-rich);
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      transition: gap 200ms;
+    }
+    .apply-link:hover { gap: 12px; }
+
+    /* What to expect */
+    .expect { background: var(--petal); }
+    .expect-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    @media (max-width: 840px) { .expect-grid { grid-template-columns: 1fr; gap: 48px; } }
+    .expect-img { border-radius: var(--radius-lg); width: 100%; aspect-ratio: 4/5; object-fit: cover; box-shadow: var(--shadow-lg); }
+    .expect-items { display: flex; flex-direction: column; gap: 24px; margin-top: 32px; }
+    .expect-item { display: flex; gap: 16px; align-items: flex-start; }
+    .expect-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--eden-forest), var(--eden-emerald));
+      color: var(--white); font-family: var(--font-display); font-size: 16px; font-weight: 600;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .expect-item strong { display: block; font-size: 15px; font-weight: 600; color: var(--text-dark); margin-bottom: 3px; }
+    .expect-item p { font-size: 14px; color: var(--text-soft); line-height: 1.65; }
+
+    /* Apply form */
+    .vol-apply { background: var(--white); }
+    .vol-apply-layout { display: grid; grid-template-columns: 1fr 480px; gap: 72px; align-items: start; }
+    @media (max-width: 960px) { .vol-apply-layout { grid-template-columns: 1fr; } }
+    .submit-btn { width:100%;justify-content:center;padding:17px;font-size:16px;background:linear-gradient(135deg,var(--eden-forest),var(--eden-emerald));color:var(--white);border-radius:var(--radius-sm);box-shadow:0 4px 20px rgba(30,92,58,.3); }
+    .submit-btn:hover { opacity:.9;transform:translateY(-2px); }
+    .form-note { font-size:13px;color:var(--text-muted);text-align:center;margin-top:16px;line-height:1.6; }
+    .form-section-title { font-family:var(--font-display);font-size:22px;font-weight:600;color:var(--text-dark);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border-green); }
+    .form-section-wrap { margin-bottom:36px; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-mark">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 21.6C12 21.6 3 15 3 8.5C3 6.01 4.99 4 7.5 4C9.24 4 10.91 5.01 12 6.5C13.09 5.01 14.76 4 16.5 4C19.01 4 21 6.01 21 8.5C21 15 12 21.6 12 21.6Z" fill="rgba(232,192,106,0.8)"/>
+            <circle cx="8.5" cy="3" r="1.5" fill="rgba(168,197,181,0.7)"/>
+            <circle cx="15.5" cy="3" r="1.5" fill="rgba(168,197,181,0.7)"/>
+            <circle cx="5.5" cy="6" r="1.2" fill="rgba(168,197,181,0.7)"/>
+            <circle cx="18.5" cy="6" r="1.2" fill="rgba(168,197,181,0.7)"/>
+          </svg>
+        </div>
+        <div class="nav-brand">
+          <span class="nav-brand-top">Heart &amp; Paw</span>
+          <span class="nav-brand-sub">Dog Rescue Sanctuary</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="index.html#dogs">Meet Our Paws</a></li>
+        <li><a href="foster.html">Foster Program</a></li>
+        <li><a href="donate.html">Donate</a></li>
+        <li><a href="careers.html" class="active">Careers</a></li>
+        <li><a href="index.html#contact" class="btn nav-cta">Adopt Today</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="container page-hero-content">
+      <span class="tag">Volunteer with Us</span>
+      <h1>Give your time, <em>change a life</em></h1>
+      <p>Volunteers are the heartbeat of Heart &amp; Paw. Whether you have a weekend or a month, your presence matters — to the dogs, and to us.</p>
+    </div>
+  </section>
+
+  <!-- VOLUNTEER ROLES -->
+  <section class="section vol-roles">
+    <div class="container">
+      <a href="careers.html" class="back-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        All opportunities
+      </a>
+      <div style="margin-bottom:48px">
+        <span class="tag">How You Can Help</span>
+        <h2 class="section-title">Volunteer roles</h2>
+        <p class="section-sub">No experience necessary for most roles — just willingness, warmth, and a love for dogs.</p>
+      </div>
+      <div class="vol-grid">
+        <div class="vol-card reveal">
+          <div class="vol-card-top">
+            <div class="vol-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+            <h3>Dog Companion</h3>
+            <div class="commitment">On-site</div>
+          </div>
+          <div class="vol-card-body">
+            <p>Walk, sit with, and socialise our resident dogs. This is the most impactful thing any volunteer can do — your calm, steady presence helps traumatised dogs trust humans again.</p>
+            <div class="vol-tasks">
+              <span class="vol-task">Morning and evening walks across the grounds</span>
+              <span class="vol-task">Quiet companionship in the garden enclosures</span>
+              <span class="vol-task">Basic enrichment activities under staff guidance</span>
+            </div>
+            <a href="#apply" class="apply-link">Apply to volunteer <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          </div>
+        </div>
+
+        <div class="vol-card reveal reveal-delay-1">
+          <div class="vol-card-top">
+            <div class="vol-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22c0 0-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/></svg></div>
+            <h3>Kennel &amp; Grounds Maintenance</h3>
+            <div class="commitment">On-site</div>
+          </div>
+          <div class="vol-card-body">
+            <p>Help us maintain the land and space that makes Heart &amp; Paw a true paradise and the best home it can be for our paw pups!</p>
+            <div class="vol-tasks">
+              <span class="vol-task">Meadow and ground maintenance</span>
+              <span class="vol-task">Shelter and kennel upkeep</span>
+              <span class="vol-task">Stocking and organization</span>
+            </div>
+            <a href="#apply" class="apply-link">Apply to volunteer <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          </div>
+        </div>
+
+        <div class="vol-card reveal reveal-delay-2">
+          <div class="vol-card-top">
+            <div class="vol-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+            <h3>Photography &amp; Content</h3>
+            <div class="commitment">On-site</div>
+          </div>
+          <div class="vol-card-body">
+            <p>Every dog needs a photograph that captures their personality. If you have a camera and an eye for a shot, you can help our dogs get adopted faster — a great photo changes everything.</p>
+            <div class="vol-tasks">
+              <span class="vol-task">Portrait photography of resident dogs</span>
+              <span class="vol-task">Social media content creation</span>
+              <span class="vol-task">Short video reels for adoption listings</span>
+            </div>
+            <a href="#apply" class="apply-link">Apply to volunteer <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT TO EXPECT -->
+  <section class="section expect">
+    <div class="container">
+      <div class="expect-grid">
+        <div class="reveal">
+          <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=700&q=80" alt="Dog and volunteer spending time together in the Tuscan sanctuary grounds" class="expect-img" loading="lazy" width="500" height="625"/>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <span class="tag">Your Experience</span>
+          <h2 class="section-title">What to expect as a volunteer</h2>
+          <p class="section-sub">We take care of our volunteers as carefully as we take care of our dogs.</p>
+          <div class="expect-items">
+            <div class="expect-item">
+              <div class="expect-num">1</div>
+              <div>
+                <strong>Full orientation on arrival</strong>
+                <p>Every volunteer receives a thorough introduction to the sanctuary, our dogs, and our approach before starting.</p>
+              </div>
+            </div>
+            <div class="expect-item">
+              <div class="expect-num">2</div>
+              <div>
+                <strong>Staff supervision throughout</strong>
+                <p>You are never left alone with a situation you're not equipped for. Our team is always close by.</p>
+              </div>
+            </div>
+            <div class="expect-item">
+              <div class="expect-num">3</div>
+              <div>
+                <strong>Accommodation near the sanctuary</strong>
+                <p>For stays of 5+ days we can connect you with local accommodation at reduced rates.</p>
+              </div>
+            </div>
+            <div class="expect-item">
+              <div class="expect-num">4</div>
+              <div>
+                <strong>A reference letter on request</strong>
+                <p>All volunteers who complete a minimum 5-day stay can request a formal reference from Daniella de Raaf.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPLICATION FORM -->
+  <section class="section vol-apply" id="apply">
+    <div class="container">
+      <div class="vol-apply-layout">
+        <div class="reveal">
+          <span class="tag">Volunteer Application</span>
+          <h2 class="section-title">Apply to volunteer</h2>
+          <p class="section-sub" style="margin-bottom:20px">
+            Tell us a little about yourself and when you'd like to come. We'll get back to you within 5 working days. All enquiries go to <a href="mailto:heartandpawsanctuary@gmail.com" style="color:var(--eden-rich);font-weight:500">heartandpawsanctuary@gmail.com</a>.
+          </p>
+          <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=600&q=80" alt="Luna resting in the sanctuary garden" style="border-radius:var(--radius-lg);margin-top:24px;box-shadow:var(--shadow-md)" loading="lazy" width="480" height="320"/>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <form onsubmit="return handleSubmit(event)">
+            <div class="form-section-wrap">
+              <div class="form-section-title">About you</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="v-first">First name <span>*</span></label>
+                  <input id="v-first" type="text" class="form-input" placeholder="Your first name" required autocomplete="given-name"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="v-last">Last name <span>*</span></label>
+                  <input id="v-last" type="text" class="form-input" placeholder="Your last name" required autocomplete="family-name"/>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="v-email">Email <span>*</span></label>
+                  <input id="v-email" type="email" class="form-input" placeholder="you@example.com" required autocomplete="email"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="v-country">Country <span>*</span></label>
+                  <select id="v-country" class="form-select" required>
+                    <option value="" disabled selected>Select country</option>
+                    <option>Italy</option><option>Germany</option><option>Netherlands</option>
+                    <option>United Kingdom</option><option>France</option><option>Belgium</option>
+                    <option>Austria</option><option>Switzerland</option><option>Other</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-section-wrap">
+              <div class="form-section-title">Your availability</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="v-from">Available from <span>*</span></label>
+                  <input id="v-from" type="date" class="form-input" required/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="v-to">Available until <span>*</span></label>
+                  <input id="v-to" type="date" class="form-input" required/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="v-role">Preferred role <span>*</span></label>
+                <select id="v-role" class="form-select" required>
+                  <option value="" disabled selected>Which role interests you?</option>
+                  <option>Dog Companion</option>
+                  <option>Grounds &amp; Garden</option>
+                  <option>Photography &amp; Content</option>
+                  <option>Adoption Support (remote)</option>
+                  <option>Open to anything</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-section-wrap">
+              <div class="form-section-title">A little more</div>
+              <div class="form-group">
+                <label class="form-label" for="v-why">Why do you want to volunteer with us?</label>
+                <textarea id="v-why" class="form-textarea" placeholder="Tell us what brought you here and any relevant experience with animals…"></textarea>
+              </div>
+            </div>
+            <button type="submit" class="btn submit-btn">
+              Submit Volunteer Application
+            </button>
+            <p class="form-note">We respond within 5 working days.<br/>Questions? <a href="mailto:heartandpawsanctuary@gmail.com" style="color:var(--eden-rich)">heartandpawsanctuary@gmail.com</a></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-name">Heart &amp; Paw Sanctuary</div>
+          <p>A no-kill sanctuary on 8 hectares of Tuscan hillside, finding forever homes for abandoned dogs since 2025.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Sanctuary</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="index.html#dogs">Meet Our Paws</a></li>
+            <li><a href="foster.html">Foster Program</a></li>
+            <li><a href="careers.html">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get Involved</h4>
+          <ul>
+            <li><a href="index.html#contact">Adopt</a></li>
+            <li><a href="foster.html">Foster</a></li>
+            <li><a href="donate.html">Donate</a></li>
+            <li><a href="volunteer.html">Volunteer</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:heartandpawsanctuary@gmail.com">heartandpawsanctuary@gmail.com</a></li>
+            <li><a href="tel:+390577000000">+39 0577 000 000</a></li>
+            <li><a href="#">Loc. Poggio Verde, Siena SI</a></li>
+            <li><a href="#">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Heart &amp; Paw Sanctuary APS · Made with <span class="footer-heart">♥</span> in Tuscany</p>
+        <p>Privacy Policy · Cookie Policy</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.submit-btn');
+      btn.textContent = '✓ Application received! We\'ll be in touch soon.';
+      btn.disabled = true;
+      return false;
+    }
+  </script>
+</body>
+</html>
