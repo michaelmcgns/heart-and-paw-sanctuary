@@ -175,11 +175,12 @@
       <a href="index.html" class="nav-logo">
         <div class="nav-logo-mark">
           <svg viewBox="0 0 24 24" fill="none">
-            <path d="M12 21.6C12 21.6 3 15 3 8.5C3 6.01 4.99 4 7.5 4C9.24 4 10.91 5.01 12 6.5C13.09 5.01 14.76 4 16.5 4C19.01 4 21 6.01 21 8.5C21 15 12 21.6 12 21.6Z" fill="rgba(232,192,106,0.8)"/>
-            <circle cx="8.5" cy="3" r="1.5" fill="rgba(168,197,181,0.7)"/>
-            <circle cx="15.5" cy="3" r="1.5" fill="rgba(168,197,181,0.7)"/>
-            <circle cx="5.5" cy="6" r="1.2" fill="rgba(168,197,181,0.7)"/>
-            <circle cx="18.5" cy="6" r="1.2" fill="rgba(168,197,181,0.7)"/>
+            <path d="M12 21C12 21 3 15 3 8.5C3 6.01 4.99 4 7.5 4C9.24 4 10.91 5.01 12 6.5C13.09 5.01 14.76 4 16.5 4C19.01 4 21 6.01 21 8.5C21 15 12 21 12 21Z" fill="rgba(232,192,106,0.9)"/>
+            <ellipse cx="12" cy="15.5" rx="2.5" ry="2" fill="rgba(255,255,255,0.85)"/>
+            <ellipse cx="8.8" cy="12.2" rx="1.1" ry="1" fill="rgba(255,255,255,0.85)"/>
+            <ellipse cx="10.8" cy="10.8" rx="1.1" ry="1" fill="rgba(255,255,255,0.85)"/>
+            <ellipse cx="13.2" cy="10.8" rx="1.1" ry="1" fill="rgba(255,255,255,0.85)"/>
+            <ellipse cx="15.2" cy="12.2" rx="1.1" ry="1" fill="rgba(255,255,255,0.85)"/>
           </svg>
         </div>
         <div class="nav-brand">
@@ -195,6 +196,9 @@
         <li><a href="careers.html">Careers</a></li>
         <li><a href="index.html#contact" class="btn nav-cta">Adopt Today</a></li>
       </ul>
+      <button class="nav-hamburger" aria-label="Toggle menu" onclick="toggleNav()">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
 
@@ -568,6 +572,10 @@
   </footer>
 
   <script>
+    function toggleNav() {
+      document.querySelector(".nav-links").classList.toggle("open");
+      document.querySelector(".nav-hamburger").classList.toggle("open");
+    }
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
     }, { threshold: 0.1 });

@@ -219,7 +219,47 @@
       box-shadow: 0 2px 12px rgba(201,146,58,.35) !important;
     }
     .nav-cta:hover { background: #B07B2A !important; transform: translateY(-1px) !important; }
-    @media (max-width: 768px) { .nav-links { display: none; } }
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      padding: 8px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: rgba(255,255,255,.8);
+      border-radius: 2px;
+      transition: transform 250ms, opacity 250ms;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    @media (max-width: 768px) {
+      .nav-hamburger { display: flex; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0; right: 0;
+        background: rgba(10,31,18,.97);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 8px 0 16px;
+        border-top: 1px solid rgba(255,255,255,.08);
+      }
+      .nav-links.open { display: flex; }
+      .nav-links li { width: 100%; }
+      .nav-links a { display: block; padding: 13px 28px; font-size: 15px; }
+      .nav-cta { margin: 10px 28px !important; width: calc(100% - 56px) !important; justify-content: center; padding: 12px 22px !important; }
+    }
 
     /* ── HERO ── */
     .hero {
@@ -846,11 +886,12 @@
       <a href="#" class="nav-logo" aria-label="Heart and Paw Sanctuary home">
         <div class="nav-logo-mark">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 21.6C12 21.6 3 15 3 8.5C3 6.01 4.99 4 7.5 4C9.24 4 10.91 5.01 12 6.5C13.09 5.01 14.76 4 16.5 4C19.01 4 21 6.01 21 8.5C21 15 12 21.6 12 21.6Z" fill="rgba(232,192,106,0.8)" stroke="rgba(232,192,106,0.5)" stroke-width="1"/>
-            <circle cx="8.5" cy="3" r="1.5" fill="rgba(168,197,181,0.7)"/>
-            <circle cx="15.5" cy="3" r="1.5" fill="rgba(168,197,181,0.7)"/>
-            <circle cx="5.5" cy="6" r="1.2" fill="rgba(168,197,181,0.7)"/>
-            <circle cx="18.5" cy="6" r="1.2" fill="rgba(168,197,181,0.7)"/>
+            <path d="M12 21C12 21 3 15 3 8.5C3 6.01 4.99 4 7.5 4C9.24 4 10.91 5.01 12 6.5C13.09 5.01 14.76 4 16.5 4C19.01 4 21 6.01 21 8.5C21 15 12 21 12 21Z" fill="rgba(232,192,106,0.9)"/>
+            <ellipse cx="12" cy="15.5" rx="2.5" ry="2" fill="rgba(255,255,255,0.85)"/>
+            <ellipse cx="8.8" cy="12.2" rx="1.1" ry="1" fill="rgba(255,255,255,0.85)"/>
+            <ellipse cx="10.8" cy="10.8" rx="1.1" ry="1" fill="rgba(255,255,255,0.85)"/>
+            <ellipse cx="13.2" cy="10.8" rx="1.1" ry="1" fill="rgba(255,255,255,0.85)"/>
+            <ellipse cx="15.2" cy="12.2" rx="1.1" ry="1" fill="rgba(255,255,255,0.85)"/>
           </svg>
         </div>
         <div class="nav-brand">
@@ -866,6 +907,9 @@
         <li><a href="careers.html">Careers</a></li>
         <li><a href="#contact" class="btn nav-cta">Adopt Today</a></li>
       </ul>
+      <button class="nav-hamburger" aria-label="Toggle menu" onclick="toggleNav()">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
 
@@ -884,12 +928,7 @@
     </svg>
 
     <div class="container hero-content">
-      <div class="hero-badge" aria-label="Siena, Tuscany — No-kill sanctuary, est. 2025">
-        <svg class="hero-badge-leaf" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22c0 0-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><path d="M12 22V6"/></svg>
-        <span>Siena, Tuscany — No-kill since 2025</span>
-      </div>
-
-      <h1 class="hero-title" id="hero-title">
+<h1 class="hero-title" id="hero-title">
         A garden where<br/>every soul finds <em>paradise</em>
       </h1>
       <p class="hero-sub">
@@ -910,34 +949,6 @@
     </div>
   </section>
 
-  <!-- PROMISE STRIP -->
-  <section class="promise" aria-label="Sanctuary statistics">
-    <!-- Botanical leaf decoration -->
-    <svg class="leaf-deco" style="left:-60px;top:-40px;width:300px;opacity:.06" viewBox="0 0 120 200" aria-hidden="true">
-      <path d="M60 5 Q100 30 105 80 Q110 130 70 165 Q40 185 15 160 Q-5 135 5 85 Q15 35 60 5Z" fill="#A8C5B5"/>
-      <path d="M60 5 L55 165" stroke="#A8C5B5" stroke-width="1.5" fill="none"/>
-    </svg>
-    <div class="container">
-      <div class="promise-grid">
-        <div class="promise-item">
-          <div class="promise-number">1,200+</div>
-          <div class="promise-label">Dogs Rehomed</div>
-        </div>
-        <div class="promise-item">
-          <div class="promise-number">Est.</div>
-          <div class="promise-label">2025</div>
-        </div>
-        <div class="promise-item">
-          <div class="promise-number">8 ha</div>
-          <div class="promise-label">Sanctuary Grounds</div>
-        </div>
-        <div class="promise-item">
-          <div class="promise-number">98%</div>
-          <div class="promise-label">Adoption Success</div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ABOUT -->
   <section class="section about" id="about" aria-labelledby="about-title">
@@ -1338,6 +1349,11 @@
   </footer>
 
   <script>
+    function toggleNav() {
+      document.querySelector('.nav-links').classList.toggle('open');
+      document.querySelector('.nav-hamburger').classList.toggle('open');
+    }
+
     // Nav scroll
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
